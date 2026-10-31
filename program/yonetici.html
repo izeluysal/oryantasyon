@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Oryantasyon Yönetici Raporu</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.wrap{max-width:1100px;margin:0 auto;padding:28px clamp(16px,4vw,40px)}
+.drop{border:3px dashed #2a4a70;border-radius:14px;padding:28px;text-align:center;margin:18px 0}
+.drop.over{border-color:var(--teal)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:18px 0}
+.kpi{background:var(--card);border-radius:12px;padding:14px}.kpi b{display:block;font-size:1.8rem;color:var(--gold)}
+.tw{overflow-x:auto}
+td.n,th.n{text-align:right}
+.ok{color:var(--ok)}.warn{color:#ff9b94}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mlabel">ECE KALİBRASYON · ORYANTASYON</div>
+  <h2>Yönetici Raporu</h2>
+  <p style="color:var(--mute)">Çalışanların “Sonuç dosyasını indir” ile aldığı <code>oryantasyon-sonuc-*.json</code> dosyalarını buraya bırakın. Veriler tarayıcıdan dışarı gönderilmez.</p>
+  <div class="drop" id="drop">
+    <p>Dosyaları buraya sürükleyin veya seçin</p>
+    <input type="file" id="f" accept=".json,application/json" multiple aria-label="Sonuç dosyaları">
+  </div>
+  <div id="out"></div>
+</div>
+<script>
+(function () {
+  var rows = [];
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function fmt(d) { return d ? new Date(d).toLocaleDateString("tr-TR") : "—"; }
+  function add(files) {
+    var left = files.length;
+    Array.prototype.forEach.call(files, function (f) {
+      var r = new FileReader();
+      r.onload = function () {
+        try { var d = JSON.parse(r.result); if (d && d.kurs && d.ekranlar) { rows = rows.filter(function (x) { return x.ad !== d.ad; }); rows.push(d); } } catch (e) {}
+        if (--left === 0) render();
+      };
+      r.readAsText(f);
+    });
+  }
+  function render() {
+    var out = document.getElementById("out");
+    if (!rows.length) { out.innerHTML = '<div class="panel">Geçerli sonuç dosyası bulunamadı.</div>'; return; }
+    rows.sort(function (a, b) { return a.ad.localeCompare(b.ad, "tr"); });
+    var done = rows.filter(function (r) { return r.tamamlandi; }).length;
+    var avgC = Math.round(rows.reduce(function (s, r) { return s + r.coin; }, 0) / rows.length);
+    var avgA = Math.round(rows.reduce(function (s, r) { return s + r.ilkDenemeDogruOrani; }, 0) / rows.length);
+    var h = '<div class="kpis"><div class="kpi"><b>' + rows.length + '</b>çalışan</div><div class="kpi"><b>' + done + '</b>tamamladı</div>' +
+      '<div class="kpi"><b>' + avgC + '</b>ortalama Ece-Coin</div><div class="kpi"><b>%' + avgA + '</b>ilk denemede doğru</div></div>';
+    h += '<div class="tw"><table><tr><th>Çalışan</th><th>Durum</th><th class="n">Ekran</th><th class="n">Ece-Coin</th><th>Seviye</th><th class="n">İlk deneme</th><th>Bitiş</th><th>Rozetler</th></tr>';
+    rows.forEach(function (r) {
+      h += "<tr><td>" + esc(r.ad) + "</td><td class='" + (r.tamamlandi ? "ok" : "warn") + "'>" + (r.tamamlandi ? "Tamamladı" : "Devam ediyor") + "</td><td class='n'>" +
+        r.tamamlananEkran + "/" + r.toplamEkran + "</td><td class='n'>" + r.coin + "/" + r.toplamCoin + "</td><td>" + esc(r.seviye) + "</td><td class='n'>%" +
+        r.ilkDenemeDogruOrani + "</td><td>" + fmt(r.bitis) + "</td><td>" + esc((r.rozetler || []).join(", ") || "—") + "</td></tr>";
+    });
+    h += "</table></div>";
+    // içerik iyileştirme: ilk denemede en çok zorlanılan ekranlar
+    var agg = {};
+    rows.forEach(function (r) { r.ekranlar.forEach(function (e) { if (!e.soru) return; var a = agg[e.no] || (agg[e.no] = { baslik: e.baslik, soru: 0, dogru: 0 }); a.soru += e.soru; a.dogru += e.ilkDenemeDogru; }); });
+    var list = Object.keys(agg).map(function (k) { return { no: k, baslik: agg[k].baslik, oran: Math.round(agg[k].dogru / agg[k].soru * 100) }; }).sort(function (a, b) { return a.oran - b.oran; }).slice(0, 5);
+    h += "<h3>En çok zorlanılan ekranlar</h3><p style='color:var(--mute)'>Düşük oran, içeriğin anlaşılırlığını gözden geçirme ihtiyacına işaret eder; çalışan performansını tek başına puanlamak için kullanılmamalıdır.</p><div class='tw'><table><tr><th>Ekran</th><th class='n'>İlk denemede doğru</th></tr>" +
+      list.map(function (x) { return "<tr><td>" + esc(x.no) + " · " + esc(x.baslik) + "</td><td class='n'>%" + x.oran + "</td></tr>"; }).join("") + "</table></div>";
+    h += '<p><button class="btn" id="csv">CSV olarak indir</button></p>';
+    out.innerHTML = h;
+    document.getElementById("csv").onclick = function () {
+      var c = ["Çalışan;Durum;Ekran;Ece-Coin;Seviye;İlk deneme %;Bitiş;Rozetler"].concat(rows.map(function (r) {
+        return [r.ad, r.tamamlandi ? "Tamamladı" : "Devam ediyor", r.tamamlananEkran + "/" + r.toplamEkran, r.coin, r.seviye, r.ilkDenemeDogruOrani, fmt(r.bitis), (r.rozetler || []).join(" | ")].map(function (v) { return '"' + String(v).replace(/"/g, '""') + '"'; }).join(";");
+      })).join("\r\n");
+      var a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["﻿" + c], { type: "text/csv;charset=utf-8" })); a.download = "oryantasyon-rapor.csv"; a.click();
+    };
+  }
+  var drop = document.getElementById("drop");
+  document.getElementById("f").onchange = function (e) { add(e.target.files); };
+  drop.ondragover = function (e) { e.preventDefault(); drop.classList.add("over"); };
+  drop.ondragleave = function () { drop.classList.remove("over"); };
+  drop.ondrop = function (e) { e.preventDefault(); drop.classList.remove("over"); add(e.dataTransfer.files); };
+})();
+</script>
+</body>
+</html>
