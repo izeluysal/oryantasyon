@@ -90,6 +90,11 @@ class Client:
         data.setdefault("csrf_token", self.token(token_from))
         return self.request("post", path, data=data, **kwargs)
 
+    def ajax(self, path, data=None, token_from="/dashboard"):
+        """AJAX (XHR) POST: CSRF belirteci başlıkla gönderilir; yanıt nesnesini döndürür (JSON: .get_json())."""
+        headers = {"X-CSRFToken": self.token(token_from), "X-Requested-With": "XMLHttpRequest"}
+        return self.request("post", path, data=data or {}, headers=headers)
+
     def login(self, email, password=TEST_PASSWORD):
         """Giriş yapar ve yanıtı döndürür."""
         return self.post("/auth/login", {"email": email, "password": password})

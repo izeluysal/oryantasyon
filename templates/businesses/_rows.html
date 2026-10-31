@@ -1,0 +1,41 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for row in rows %}
+<tr>
+  <td>{{ row.business_name }}</td>
+  <td>
+    {% set url = row.publish_url if row.publish_url.startswith(('http://', 'https://')) else 'https://' ~ row.publish_url %}
+    <a href="{{ url }}" target="_blank" rel="noopener">{{ row.publish_url }}</a>
+  </td>
+  <td>
+    <form method="post" action="{{ url_for('businesses.toggle_status', business_id=row.business_id) }}" data-ajax data-refresh="businessTable">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      {% if row.is_active %}
+      <button type="submit" class="btn btn-sm btn-outline-success"><i class="bi bi-check-circle me-1" aria-hidden="true"></i>{{ t('common.active') }}</button>
+      {% else %}
+      <button type="submit" class="btn btn-sm btn-outline-secondary"><i class="bi bi-slash-circle me-1" aria-hidden="true"></i>{{ t('common.passive') }}</button>
+      {% endif %}
+    </form>
+  </td>
+  <td class="text-end"><span class="badge {{ 'text-bg-secondary' if row.user_count == 0 else 'text-bg-warning' if row.user_count == 1 else 'text-bg-primary' if row.user_count == 2 else 'text-bg-danger' }}">{{ row.user_count | sayi }}</span></td>
+  <td>{{ row.created_at | tarih }}</td>
+  <td class="text-end">
+    <div class="btn-group btn-group-sm btn-group-with-form">
+      <form method="post" action="{{ url_for('business_context.select_business') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="business_id" value="{{ row.business_id }}">
+        <button type="submit" class="btn btn-outline-secondary" aria-label="{{ t('business.enter') }}" title="{{ t('business.enter') }}"><i class="bi bi-box-arrow-in-right" aria-hidden="true"></i></button>
+      </form>
+      <button type="button" class="btn btn-outline-secondary" data-business-edit
+              data-record='{{ {"business_id": row.business_id, "business_name": row.business_name, "publish_url": row.publish_url} | tojson | forceescape }}'
+              aria-label="{{ t('common.edit') }}" title="{{ t('common.edit') }}"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+      <form method="post" action="{{ url_for('businesses.delete', business_id=row.business_id) }}" data-ajax data-refresh="businessTable"
+            data-confirm="{{ t('business.delete_confirm', name=row.business_name, count=row.user_count) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-danger" aria-label="{{ t('common.delete') }}" title="{{ t('common.delete') }}"><i class="bi bi-trash" aria-hidden="true"></i></button>
+      </form>
+    </div>
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="6">{{ empty_state(t('business.empty'), 'bi-buildings') }}</td></tr>
+{% endfor %}

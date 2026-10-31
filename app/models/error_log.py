@@ -7,7 +7,7 @@ from datetime import datetime
 
 import psycopg2
 
-from app.db import execute
+from app.db import PER_PAGE, execute, like_pattern, query_all
 from app.paths import LOGS_DIR
 
 logger = logging.getLogger(__name__)
@@ -30,6 +30,22 @@ class ErrorLog:
         except psycopg2.Error as error:
             logger.error("error_log tablosuna yazılamadı: %s", error)
             ErrorLog.write_to_file(error_code, url, reason, ip_address, user_id)
+
+    @staticmethod
+    def page(query="", page=1):
+        """Hata kayıtlarını sayfalı döndürür: (satırlar, toplam). Yalnızca platform yöneticisine açıktır."""
+        where, params = "", []
+        if query:
+            where = "WHERE e.error_code ILIKE %s OR e.url ILIKE %s OR e.reason ILIKE %s "
+            params.extend([like_pattern(query)] * 3)
+        params.extend([PER_PAGE, (max(page, 1) - 1) * PER_PAGE])
+        rows = query_all(
+            "SELECT e.error_log_id, e.error_code, e.url, e.reason, e.ip_address, e.occurrence_count, e.created_at, "
+            "count(*) OVER() AS total_count FROM error_log e " + where
+            + "ORDER BY e.created_at DESC, e.error_log_id DESC LIMIT %s OFFSET %s",
+            params,
+        )
+        return rows, (rows[0]["total_count"] if rows else 0)
 
     @staticmethod
     def write_to_file(error_code, url, reason, ip_address=None, user_id=None):

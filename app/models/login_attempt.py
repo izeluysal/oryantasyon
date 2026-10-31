@@ -2,7 +2,7 @@
 import logging
 import math
 
-from app.db import execute, query_one
+from app.db import execute, query_all, query_one
 from app.models.config import Config
 
 logger = logging.getLogger(__name__)
@@ -55,6 +55,14 @@ class LoginAttempt:
             "FROM ip_blocks WHERE ip_address = %s AND blocked_until > now() "
             "ORDER BY blocked_until DESC LIMIT 1",
             (ip_address,),
+        )
+
+    @staticmethod
+    def active_blocks():
+        """Şu an aktif olan IP bloklarını döndürür (Güvenlik sekmesi listesi)."""
+        return query_all(
+            "SELECT ip_block_id, ip_address, attempt_count, blocked_until FROM ip_blocks "
+            "WHERE blocked_until > now() ORDER BY blocked_until DESC LIMIT 100"
         )
 
     @staticmethod

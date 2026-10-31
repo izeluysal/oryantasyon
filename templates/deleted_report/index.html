@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{% block title %}{{ t('menu.deleted_report') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('menu.deleted_report') }}</h1>
+</div>
+{% call kullanim_bilgisi() %}{{ t('deleted.usage_info_html') | safe }}{% if can_restore %} {{ t('deleted.usage_info_restore_html') | safe }}{% endif %}{% endcall %}
+<div class="card">
+  <div class="card-body">
+    <div class="table-toolbar">
+      <div class="filters">
+        <input type="search" class="form-control" id="deletedSearch" placeholder="{{ t('common.search') }}"
+               aria-label="{{ t('common.search') }}" maxlength="100">
+      </div>
+      <span class="text-muted small" id="deletedTotal" aria-live="polite"></span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="deletedTable">
+        <thead><tr>
+          <th>{{ t('log.field.date') }}</th><th>{{ t('log.field.user') }}</th><th>{{ t('log.field.action') }}</th>
+          <th>{{ t('deleted.field.entity_type') }}</th><th>{{ t('deleted.field.entity_name') }}</th>
+          {% if not business %}<th>{{ t('log.field.business') }}</th>{% endif %}
+          <th class="text-end">{{ t('common.actions') }}</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="table-pager" id="deletedPager" hidden></div>
+  </div>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="detailModalTitle">{{ t('deleted.detail.title') }}</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ t('common.close') }}"></button>
+      </div>
+      <div class="modal-body">
+        {% call kullanim_bilgisi() %}{{ t('deleted.detail.usage_info') }}{% endcall %}
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead><tr><th>{{ t('deleted.detail.column') }}</th><th>{{ t('deleted.detail.old') }}</th><th>{{ t('deleted.detail.new') }}</th></tr></thead>
+            <tbody id="detailBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/deleted_report.js') }}"></script>
+{% endblock %}

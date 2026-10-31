@@ -15,7 +15,7 @@ ROOT = os.path.dirname(TEST_DIR)
 sys.path.insert(0, TEST_DIR)
 
 STATIC_CHECKS = ("import_dogrula.py", "cagri_dogrula.py", "template_dogrula.py", "ceviri_dogrula.py")
-TEST_MODULES = ("test_izolasyon", "test_yetki", "test_regresyon", "test_ekran_duman")
+TEST_MODULES = ("test_izolasyon", "test_yetki", "test_regresyon", "test_is_mantigi", "test_ekran_duman")
 
 
 def run_static():

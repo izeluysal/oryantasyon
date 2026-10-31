@@ -1,0 +1,110 @@
+{% from 'macros/ui.html' import kullanim_bilgisi, kolon_filtresi, kolon_filtre_temizle, sayac_karti %}
+{% from 'macros/form.html' import field_label %}
+{% call kullanim_bilgisi() %}{{ t('user.usage_info_html') | safe }}{% if can_write %} {{ t('user.usage_info_manage_html') | safe }}{% endif %}{% endcall %}
+
+<div class="row g-3 mb-3" role="group" aria-label="{{ t('user.counter.aria') }}">
+  {{ sayac_karti('', 'bi-people', 'userCountAll', t('user.counter.all'), True) }}
+  {{ sayac_karti('active', 'bi-person-check', 'userCountActive', t('common.active')) }}
+  {{ sayac_karti('passive', 'bi-person-slash', 'userCountPassive', t('common.passive')) }}
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="table-toolbar">
+      <div class="filters">
+        <input type="search" class="form-control" id="userSearch" placeholder="{{ t('common.search') }}"
+               aria-label="{{ t('common.search') }}" maxlength="100">
+        {{ kolon_filtre_temizle('userTable') }}
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="text-muted small" id="userTotal" aria-live="polite"></span>
+        <div class="btn-group btn-group-sm">
+          {% if can_export %}<a class="btn btn-outline-secondary" id="userExport" href="{{ url_for('settings.users_export') }}"><i class="bi bi-file-earmark-excel me-1" aria-hidden="true"></i>{{ t('common.export_excel') }}</a>{% endif %}
+          {% if can_write %}<button type="button" class="btn btn-primary" id="userNew"><i class="bi bi-plus-lg me-1" aria-hidden="true"></i>{{ t('user.new') }}</button>{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="userTable">
+        <thead>
+          <tr>
+            <th>{{ t('user.field.full_name') }}</th><th>{{ t('user.field.email') }}</th><th>{{ t('user.field.phone') }}</th>
+            <th>{{ t('user.field.role') }}</th><th>{{ t('common.status') }}</th><th>{{ t('user.field.last_login') }}</th>
+            <th class="text-end">{{ t('common.actions') }}</th>
+          </tr>
+          <tr class="tablo-filtre-satiri">
+            <th></th><th></th><th></th>
+            <th>{% set role_options = [] %}{% for role in roles %}{% set _ = role_options.append((role, t('role.' ~ role))) %}{% endfor %}
+              {{ kolon_filtresi('role', t('user.field.role'), t('common.all'), role_options) }}</th>
+            <th></th>
+            <th></th><th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="table-pager" id="userPager" hidden></div>
+  </div>
+</div>
+
+{% if can_write %}
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <form class="modal-content" id="userForm" method="post" data-ajax data-modal="userModal" data-refresh="userTable"
+          data-title-new="{{ t('user.modal.new') }}" data-title-edit="{{ t('user.modal.edit') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5" id="userModalTitle">{{ t('user.modal.new') }}</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ t('common.close') }}"></button>
+      </div>
+      <div class="modal-body">
+        {% call kullanim_bilgisi() %}{{ t('user.modal.usage_info') }}{% endcall %}
+        <div class="row g-3">
+          <div class="col-md-6">
+            {{ field_label(t('user.field.full_name'), t('user.field.full_name.hint'), 'userFullName', true) }}
+            <input type="text" class="form-control" id="userFullName" name="full_name" maxlength="255" required>
+          </div>
+          <div class="col-md-6">
+            {{ field_label(t('user.field.email'), t('user.field.email.hint'), 'userEmail', true) }}
+            <input type="email" class="form-control" id="userEmail" name="email" maxlength="255" required>
+          </div>
+          <div class="col-md-6">
+            {{ field_label(t('user.field.phone'), t('user.field.phone.hint'), 'userPhone') }}
+            <input type="text" class="form-control" id="userPhone" name="phone" maxlength="50">
+          </div>
+          <div class="col-md-6">
+            {{ field_label(t('user.field.role'), t('user.field.role.hint'), 'userRole', true) }}
+            <select class="form-select" id="userRole" name="role" required>
+              {% for role in roles %}<option value="{{ role }}">{{ t('role.' ~ role) }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="col-md-6">
+            {{ field_label(t('user.field.theme'), t('user.field.theme.hint'), 'userTheme') }}
+            <select class="form-select" id="userTheme" name="theme">
+              <option value="light">{{ t('user.theme.light') }}</option>
+              <option value="dark">{{ t('user.theme.dark') }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            {{ field_label(t('user.field.password'), t('user.field.password.hint'), 'userPassword') }}
+            <input type="password" class="form-control" id="userPassword" name="password" maxlength="255" autocomplete="new-password">
+          </div>
+          <div class="col-12" id="userActiveRow" hidden>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="userActive" name="is_active" value="1" checked>
+              <label class="form-check-label" for="userActive">{{ t('common.active') }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{ t('common.cancel') }}</button>
+        <button type="submit" class="btn btn-primary">
+          <span class="spinner-border spinner-border-sm d-none" aria-hidden="true"></span>
+          <span class="btn-text"><i class="bi bi-check-lg me-1" aria-hidden="true"></i>{{ t('common.save') }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}

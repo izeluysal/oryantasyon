@@ -1,0 +1,11 @@
+{# Form etiketi: simge + tooltip tek yerden gelir (Form Input Tooltip Standardı). #}
+
+{% macro field_label(text, ipucu, for_id='', zorunlu=False) %}
+<label class="form-label" {% if for_id %}for="{{ for_id }}"{% endif %}>
+  {{ text }}{% if zorunlu %}<span class="text-danger ms-1">*</span>{% endif %}
+  <span class="ipucu" tabindex="0" data-bs-toggle="tooltip" data-bs-placement="top"
+        title="{{ ipucu }}" aria-label="{{ ipucu }}">
+    <i class="bi bi-question-circle" aria-hidden="true"></i>
+  </span>
+</label>
+{% endmacro %}

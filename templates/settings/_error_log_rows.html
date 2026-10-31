@@ -1,0 +1,12 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for row in rows %}
+<tr>
+  <td class="text-nowrap">{{ row.created_at | tarih_saat }}</td>
+  <td>{{ row.error_code }}</td>
+  <td class="text-break">{{ row.url or '-' }}</td>
+  <td class="text-break">{{ row.reason or '-' }}</td>
+  <td class="text-end">{{ row.occurrence_count | sayi }}</td>
+</tr>
+{% else %}
+<tr><td colspan="5">{{ empty_state(t('log.empty'), 'bi-journal-text') }}</td></tr>
+{% endfor %}

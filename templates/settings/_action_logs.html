@@ -1,0 +1,23 @@
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{{ kullanim_bilgisi(t('log.action.usage_info')) }}
+<div class="card">
+  <div class="card-body">
+    <div class="table-toolbar">
+      <div class="filters">
+        <input type="search" class="form-control" id="actionLogSearch" placeholder="{{ t('common.search') }}"
+               aria-label="{{ t('common.search') }}" maxlength="100">
+      </div>
+      <span class="text-muted small" id="actionLogTotal" aria-live="polite"></span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="actionLogTable">
+        <thead><tr>
+          <th>{{ t('log.field.date') }}</th><th>{{ t('log.field.user') }}</th><th>{{ t('log.field.action') }}</th>
+          <th>{{ t('log.field.entity') }}</th>{% if not business %}<th>{{ t('log.field.business') }}</th>{% endif %}<th>{{ t('log.field.ip') }}</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="table-pager" id="actionLogPager" hidden></div>
+  </div>
+</div>

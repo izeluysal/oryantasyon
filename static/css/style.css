@@ -264,3 +264,55 @@ body.app-shell { padding-top: var(--topbar-height); }
   }
   .app-shell.sidebar-collapsed .sidebar-menu .label { display: inline; }
 }
+
+/* Tablo araç çubuğu: arama formu solda, butonlar sağda; arama kutusu sınırsız büyümez. */
+.table-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.table-toolbar .filters { display: flex; gap: 8px; flex-wrap: nowrap; flex: 1; min-width: 220px; max-width: 420px; }
+.table-toolbar .filters .form-control { flex: 1 1 auto; min-width: 0; }
+.table-pager { display: flex; align-items: center; justify-content: flex-end; margin-top: 12px; }
+.table > :not(caption) > * > * { background-color: transparent; color: var(--text-primary); border-bottom-color: var(--border); }
+.table-hover > tbody > tr:hover > * { background-color: var(--surface-hover); color: var(--text-primary); }
+.card { background: var(--surface-card); border-color: var(--border); color: var(--text-primary); }
+.card-header { background: transparent; border-bottom-color: var(--border); }
+.modal-content { background: var(--surface-card); border-color: var(--border); color: var(--text-primary); }
+.modal-header, .modal-footer { border-color: var(--border); }
+:root[data-theme="dark"] .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+.nav-tabs { border-bottom-color: var(--border); }
+.nav-tabs .nav-link { color: var(--text-secondary); }
+.nav-tabs .nav-link.active { background: var(--surface-card); color: var(--primary); border-color: var(--border) var(--border) var(--surface-card); }
+.empty-state { color: var(--text-muted); }
+.ipucu { cursor: help; color: var(--text-muted); margin-left: .25rem; }
+
+/* Kolon başlığı filtreleri: başlık ile filtresi tek blok görünür. */
+.tablo-filtre-satiri th { padding-top: 0; font-weight: normal; }
+thead tr:has(+ .tablo-filtre-satiri) > th { border-bottom-width: 0; }
+.tablo-filtre-satiri .form-select { min-width: 140px; }
+
+/* Sayaç kartları: aynı zamanda filtre butonudur. */
+.filtre-sayac {
+  display: flex; align-items: center; gap: 0.875rem; width: 100%;
+  padding: 0.875rem 1rem; text-align: left;
+  color: var(--text-primary); background: var(--surface-card);
+  border: 1px solid var(--border); border-radius: 0.5rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.filtre-sayac:hover { border-color: var(--border-strong); }
+.filtre-sayac.active { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); }
+.filtre-sayac-ikon {
+  display: inline-flex; align-items: center; justify-content: center;
+  flex: 0 0 2.5rem; height: 2.5rem; font-size: 1.25rem;
+  color: var(--primary); background: var(--primary-subtle); border-radius: 0.5rem;
+}
+.filtre-sayac-deger { display: block; font-size: 1.375rem; font-weight: 600; line-height: 1.1; }
+.filtre-sayac-ad { display: block; font-size: 0.8125rem; color: var(--text-secondary); }
+
+/* Buton grubunda form: Bootstrap'in doğrudan-çocuk seçicisi form araya girince çalışmaz, birleşim elle verilir. */
+.btn-group-with-form { display: inline-flex; }
+.btn-group-with-form > .btn:not(:last-child),
+.btn-group-with-form > form:not(:last-child) > .btn { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.btn-group-with-form > .btn:not(:first-child),
+.btn-group-with-form > form:not(:first-child) > .btn { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: -1px; }
+.btn-group-with-form > .btn,
+.btn-group-with-form > form > .btn { position: relative; }
+.btn-group-with-form > .btn:hover, .btn-group-with-form > .btn:focus,
+.btn-group-with-form > form > .btn:hover, .btn-group-with-form > form > .btn:focus { z-index: 1; }

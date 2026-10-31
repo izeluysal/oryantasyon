@@ -1,0 +1,27 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for row in rows %}
+{% set info = detail_of(row.detail) %}
+<tr>
+  <td class="text-nowrap">{{ row.created_at | tarih_saat }}</td>
+  <td>{{ row.actor_name or '-' }}</td>
+  <td>{{ row.action }}</td>
+  <td>{{ row.entity_type or '-' }}</td>
+  <td>{{ info.get('name', '-') }}</td>
+  {% if not business %}<td>{{ row.business_name or t('log.platform') }}</td>{% endif %}
+  <td class="text-end">
+    <div class="btn-group btn-group-sm btn-group-with-form">
+      <button type="button" class="btn btn-outline-secondary" data-detail="{{ url_for('deleted_report.detail', userslog_id=row.userslog_id) }}"
+              aria-label="{{ t('common.detail') }}" title="{{ t('common.detail') }}"><i class="bi bi-eye" aria-hidden="true"></i></button>
+      {% if can_restore and row.action.endswith('_delete') and row.entity_type in restorable %}
+      <form method="post" action="{{ url_for('deleted_report.restore', userslog_id=row.userslog_id) }}" data-ajax data-refresh="deletedTable"
+            data-confirm="{{ t('deleted.restore_confirm', name=info.get('name', '')) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-primary" aria-label="{{ t('deleted.restore') }}" title="{{ t('deleted.restore') }}"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i></button>
+      </form>
+      {% endif %}
+    </div>
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="{{ 6 if business else 7 }}">{{ empty_state(t('deleted.empty'), 'bi-trash3') }}</td></tr>
+{% endfor %}

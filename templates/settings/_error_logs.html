@@ -1,0 +1,23 @@
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{{ kullanim_bilgisi(t('log.error.usage_info')) }}
+<div class="card">
+  <div class="card-body">
+    <div class="table-toolbar">
+      <div class="filters">
+        <input type="search" class="form-control" id="errorLogSearch" placeholder="{{ t('common.search') }}"
+               aria-label="{{ t('common.search') }}" maxlength="100">
+      </div>
+      <span class="text-muted small" id="errorLogTotal" aria-live="polite"></span>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="errorLogTable">
+        <thead><tr>
+          <th>{{ t('log.field.date') }}</th><th>{{ t('log.field.code') }}</th><th>{{ t('log.field.url') }}</th>
+          <th>{{ t('log.field.reason') }}</th><th class="text-end">{{ t('log.field.count') }}</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="table-pager" id="errorLogPager" hidden></div>
+  </div>
+</div>

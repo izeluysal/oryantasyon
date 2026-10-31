@@ -1,0 +1,30 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for user in users %}
+<tr>
+  <td>{{ user.full_name }}</td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.row.phone or '-' }}</td>
+  <td>{{ t('role.' ~ user.role) }}</td>
+  <td>
+    {% if user.is_active %}<span class="badge text-bg-success"><i class="bi bi-check-circle me-1" aria-hidden="true"></i>{{ t('common.active') }}</span>
+    {% else %}<span class="badge text-bg-secondary"><i class="bi bi-slash-circle me-1" aria-hidden="true"></i>{{ t('common.passive') }}</span>{% endif %}
+  </td>
+  <td>{{ (user.row.last_login_at | tarih_saat) or '-' }}</td>
+  <td class="text-end">
+    {% if can_write %}
+    <div class="btn-group btn-group-sm btn-group-with-form">
+      <button type="button" class="btn btn-outline-secondary" data-user-edit
+              data-record='{{ {"user_id": user.user_id, "full_name": user.full_name, "email": user.email, "phone": user.row.phone or "", "role": user.role, "theme": user.theme, "is_active": user.row.is_active} | tojson | forceescape }}'
+              aria-label="{{ t('common.edit') }}" title="{{ t('common.edit') }}"><i class="bi bi-pencil" aria-hidden="true"></i></button>
+      <form method="post" action="{{ url_for('settings.user_delete', user_id=user.user_id) }}" data-ajax data-refresh="userTable"
+            data-confirm="{{ t('user.delete_confirm', name=user.full_name) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-outline-danger" aria-label="{{ t('common.delete') }}" title="{{ t('common.delete') }}"><i class="bi bi-trash" aria-hidden="true"></i></button>
+      </form>
+    </div>
+    {% endif %}
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="7">{{ empty_state(t('user.empty'), 'bi-people') }}</td></tr>
+{% endfor %}

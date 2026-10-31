@@ -92,6 +92,120 @@ def test_failed_logins_are_recorded_for_every_rejection_branch():
         assert reasons == {"unknown_email", "inactive_user", "bad_password", "inactive_business"}
 
 
+def _log_id(action, entity_id):
+    """Verilen işlem ve kayıt için en son log kimliğini döndürür."""
+    from app.db import query_one
+    return query_one("SELECT max(userslog_id) AS id FROM userslogs WHERE action = %s AND entity_id = %s",
+                     (action, entity_id))["id"]
+
+
+def test_user_delete_is_soft_and_can_be_restored_from_deleted_report():
+    """Korur: fiziksel DELETE yasağı ve geri alma ekranı. Silinen kullanıcı satırı durur, rapordan geri gelir."""
+    from app.db import query_one
+    with environment() as app:
+        business_id = make_business("geri")
+        _, admin_email = make_user(ROLE_BUSINESS_ADMIN, business_id)
+        victim_id, victim_email = make_user(ROLE_BUSINESS_ADMIN, business_id, name="kurban")
+        client = new_client(app)
+        client.login(admin_email)
+        assert client.ajax("/ayarlar/kullanicilar/{}/sil".format(victim_id)).get_json()["ok"] is True
+        assert query_one("SELECT is_deleted FROM users WHERE user_id = %s", (victim_id,))["is_deleted"] is True
+        assert victim_email not in client.get("/ayarlar/kullanicilar/veri").get_json()["html"]
+        log_id = _log_id("user_delete", victim_id)
+        assert "__test__kurban" in client.get("/silinme-raporu/veri").get_json()["html"]
+        detail = client.get("/silinme-raporu/{}/detay".format(log_id)).get_json()
+        assert detail["changes"] == [{"column": "is_deleted", "old": False, "new": True}]
+        assert client.ajax("/silinme-raporu/{}/geri-yukle".format(log_id), token_from="/silinme-raporu"
+                           ).get_json()["ok"] is True
+        assert query_one("SELECT is_deleted FROM users WHERE user_id = %s", (victim_id,))["is_deleted"] is False
+
+
+def test_restore_is_refused_when_email_was_taken_meanwhile():
+    """Korur: benzersizlik çakışması. Silinen kaydın e-postası başkasına geçtiyse geri yükleme reddedilir."""
+    from app.db import query_one
+    with environment() as app:
+        business_id = make_business("cakisma")
+        _, admin_email = make_user(ROLE_BUSINESS_ADMIN, business_id)
+        victim_id, victim_email = make_user(ROLE_BUSINESS_ADMIN, business_id, name="eski")
+        client = new_client(app)
+        client.login(admin_email)
+        client.ajax("/ayarlar/kullanicilar/{}/sil".format(victim_id))
+        form = {"full_name": "__test__yeni", "email": victim_email, "role": ROLE_BUSINESS_ADMIN, "theme": "light",
+                "password": "uzunparola1"}
+        assert client.ajax("/ayarlar/kullanicilar/yeni", form).get_json()["ok"] is True
+        response = client.ajax("/silinme-raporu/{}/geri-yukle".format(_log_id("user_delete", victim_id)),
+                               token_from="/silinme-raporu")
+        assert response.status_code == 400 and "başka bir aktif kayıtta" in response.get_json()["message"]
+        assert query_one("SELECT is_deleted FROM users WHERE user_id = %s", (victim_id,))["is_deleted"] is True
+
+
+def test_user_cannot_delete_self_or_last_platform_admin():
+    """Korur: kendini ve son yöneticiyi silip sistemi kilitleme."""
+    from app.db import execute
+    with environment() as app:
+        user_id, email = make_user(ROLE_ADMIN)
+        client = new_client(app)
+        client.login(email)
+        assert client.ajax("/ayarlar/kullanicilar/{}/sil".format(user_id)).status_code == 400
+        # Seed kullanıcısı da aktif yönetici olduğu için, "son yönetici" kuralı tüm yöneticiler pasifken denenir.
+        other_id, _ = make_user(ROLE_ADMIN, name="ikinci")
+        execute("UPDATE users SET is_active = FALSE WHERE role = 'yonetici' AND user_id NOT IN (%s, %s)",
+                (user_id, other_id))
+        try:
+            execute("UPDATE users SET is_active = FALSE WHERE user_id = %s", (other_id,))
+            response = client.ajax("/ayarlar/kullanicilar/{}/sil".format(user_id))
+            assert response.status_code == 400
+        finally:
+            execute("UPDATE users SET is_active = TRUE WHERE role = 'yonetici' AND email NOT LIKE %s", ("__test__%",))
+
+
+def test_business_delete_cascades_users_and_restore_brings_them_back():
+    """Korur: işletme silinince kullanıcıları da soft delete olur; geri yüklemede onlar da döner (log detail)."""
+    from app.db import query_one
+    with environment() as app:
+        business_id = make_business("zincir")
+        user_id, _ = make_user(ROLE_BUSINESS_ADMIN, business_id)
+        _, admin_email = make_user(ROLE_ADMIN)
+        client = new_client(app)
+        client.login(admin_email)
+        assert client.ajax("/isletmeler/{}/sil".format(business_id)).get_json()["ok"] is True
+        assert query_one("SELECT is_deleted FROM users WHERE user_id = %s", (user_id,))["is_deleted"] is True
+        log_id = _log_id("business_delete", business_id)
+        assert client.ajax("/silinme-raporu/{}/geri-yukle".format(log_id), token_from="/silinme-raporu"
+                           ).get_json()["ok"] is True
+        business_row = query_one("SELECT is_deleted FROM businesses WHERE business_id = %s", (business_id,))
+        assert business_row["is_deleted"] is False
+        assert query_one("SELECT is_deleted FROM users WHERE user_id = %s", (user_id,))["is_deleted"] is False
+
+
+def test_state_changing_posts_require_csrf_token():
+    """Korur: CSRF. Belirteçsiz POST hiçbir kayıt oluşturmaz (AJAX'a JSON 400 döner)."""
+    from app.db import query_one
+    with environment() as app:
+        _, email = make_user(ROLE_ADMIN)
+        client = new_client(app)
+        client.login(email)
+        response = client.request("post", "/isletmeler/yeni", data={"business_name": "__test__csrf",
+                                                                     "publish_url": "csrf.example.com"},
+                                  headers={"X-Requested-With": "XMLHttpRequest"})
+        assert response.status_code == 400 and response.get_json()["ok"] is False
+        assert query_one("SELECT 1 AS found FROM businesses WHERE business_name = %s", ("__test__csrf",)) is None
+
+
+def test_business_publish_url_must_be_unique_and_valid():
+    """Korur: yinelenen yayın adresi ve geçersiz adres reddedilir."""
+    with environment() as app:
+        _, email = make_user(ROLE_ADMIN)
+        client = new_client(app)
+        client.login(email)
+        good = {"business_name": "__test__a", "publish_url": "test-same.example.com"}
+        assert client.ajax("/isletmeler/yeni", good).get_json()["ok"] is True
+        duplicate = client.ajax("/isletmeler/yeni", dict(good, business_name="__test__b"))
+        assert duplicate.status_code == 400
+        invalid = client.ajax("/isletmeler/yeni", {"business_name": "__test__c", "publish_url": "bosluk var"})
+        assert invalid.status_code == 400
+
+
 if __name__ == "__main__":
     for name, function in list(globals().items()):
         if name.startswith("test_"):

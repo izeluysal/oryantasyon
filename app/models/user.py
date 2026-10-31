@@ -4,10 +4,10 @@ import hmac
 
 from flask import current_app
 from flask_login import UserMixin
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
-from app.db import execute, query_all, query_one
-from app.helpers.roles import ROLE_ADMIN
+from app.db import PER_PAGE, execute, like_pattern, query_all, query_one
+from app.helpers.roles import ALL_ROLES, ROLE_ADMIN
 
 # Kolon listesi tek yerde: SELECT * kullanılmaz, password_hash dışarı sızmasın diye açıkça seçilir.
 USER_COLUMNS = (
@@ -142,6 +142,99 @@ class User(UserMixin):
                 (business_id,),
             )
         return row["total"]
+
+    @classmethod
+    def get_in_scope(cls, user_id, business_id):
+        """Kullanıcıyı yalnızca verilen işletme kapsamındaysa getirir (None = platform); kapsam dışıysa None."""
+        row = query_one(
+            "SELECT " + USER_COLUMNS + " FROM users WHERE user_id = %s AND is_deleted = FALSE "
+            "AND business_id IS NOT DISTINCT FROM %s",
+            (user_id, business_id),
+        )
+        return cls(row) if row else None
+
+    @classmethod
+    def list_page(cls, business_id, query="", role=None, status=None, page=1):
+        """Kapsamdaki kullanıcıları arama ve kolon filtreleriyle sayfalı döndürür: (kullanıcılar, toplam)."""
+        where, params = ["is_deleted = FALSE", "business_id IS NOT DISTINCT FROM %s"], [business_id]
+        if query:
+            where.append("(full_name ILIKE %s OR email ILIKE %s OR coalesce(phone, '') ILIKE %s)")
+            params.extend([like_pattern(query)] * 3)
+        if role in ALL_ROLES:
+            where.append("role = %s")
+            params.append(role)
+        if status in ("active", "passive"):
+            where.append("is_active = %s")
+            params.append(status == "active")
+        params.extend([PER_PAGE, (max(page, 1) - 1) * PER_PAGE])
+        rows = query_all(
+            "SELECT " + USER_COLUMNS + ", count(*) OVER() AS total_count FROM users WHERE " + " AND ".join(where)
+            + " ORDER BY lower(full_name), user_id LIMIT %s OFFSET %s",
+            params,
+        )
+        return [cls(row) for row in rows], (rows[0]["total_count"] if rows else 0)
+
+    @staticmethod
+    def summary(business_id):
+        """Sayaç kartları için kapsamdaki toplam/aktif/pasif sayıları (arama ve filtrelerden bağımsız)."""
+        row = query_one(
+            "SELECT count(*) AS total, count(*) FILTER (WHERE is_active) AS active, "
+            "count(*) FILTER (WHERE NOT is_active) AS passive FROM users "
+            "WHERE is_deleted = FALSE AND business_id IS NOT DISTINCT FROM %s",
+            (business_id,),
+        )
+        return {"total": row["total"], "active": row["active"], "passive": row["passive"]}
+
+    @staticmethod
+    def email_taken(email, exclude_user_id=None):
+        """E-posta başka bir aktif (silinmemiş) kullanıcıda var mı?"""
+        row = query_one(
+            "SELECT user_id FROM users WHERE lower(email) = lower(%s) AND is_deleted = FALSE "
+            "AND user_id IS DISTINCT FROM %s",
+            (email, exclude_user_id),
+        )
+        return row is not None
+
+    @staticmethod
+    def count_active_admins():
+        """Aktif, silinmemiş platform yöneticisi sayısı (sonuncusunun silinmesini engellemek için)."""
+        row = query_one(
+            "SELECT count(*) AS total FROM users WHERE role = %s AND is_active = TRUE AND is_deleted = FALSE",
+            (ROLE_ADMIN,),
+        )
+        return row["total"]
+
+    @staticmethod
+    def create(business_id, full_name, email, phone, role, password, theme="light"):
+        """Yeni kullanıcı oluşturur ve kimliğini döndürür."""
+        row = execute(
+            "INSERT INTO users (business_id, full_name, email, phone, password_hash, role, theme) "
+            "VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING user_id",
+            (business_id, full_name, email, phone or None, generate_password_hash(password), role, theme),
+        )
+        return row["user_id"]
+
+    def update_profile(self, full_name, email, phone, role, is_active, theme, password=None):
+        """Kullanıcıyı günceller; şifre boşsa değişmez. Değişen alanları (eski/yeni) döndürür."""
+        new_values = {"full_name": full_name, "email": email, "phone": phone or None, "role": role,
+                      "is_active": is_active, "theme": theme}
+        changes = [
+            {"column": column, "old": self.row[column], "new": value}
+            for column, value in new_values.items() if self.row[column] != value
+        ]
+        sql = ("UPDATE users SET full_name = %s, email = %s, phone = %s, role = %s, is_active = %s, theme = %s, "
+               "updated_at = now()")
+        params = [full_name, email, phone or None, role, is_active, theme]
+        if password:
+            sql += ", password_hash = %s"
+            params.append(generate_password_hash(password))
+            changes.append({"column": "password", "old": "***", "new": "***"})
+        execute(sql + " WHERE user_id = %s", params + [self.user_id])
+        return changes
+
+    def soft_delete(self):
+        """Kullanıcıyı soft delete yapar (fiziksel DELETE yok)."""
+        execute("UPDATE users SET is_deleted = TRUE, updated_at = now() WHERE user_id = %s", (self.user_id,))
 
     def touch_login(self):
         """Son giriş zamanını şimdiye çeker."""

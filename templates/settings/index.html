@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('settings.title') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('settings.title') }}</h1>
+</div>
+<ul class="nav nav-tabs mb-3" id="settingsTabs" role="tablist">
+  {% if tabs.users %}<li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-users" type="button" role="tab">{{ t('settings.tab.users') }}</button></li>{% endif %}
+  {% if tabs.action_logs %}<li class="nav-item"><button class="nav-link{% if not tabs.users %} active{% endif %}" data-bs-toggle="tab" data-bs-target="#tab-action-logs" type="button" role="tab">{{ t('settings.tab.action_logs') }}</button></li>{% endif %}
+  {% if tabs.error_logs %}<li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-error-logs" type="button" role="tab">{{ t('settings.tab.error_logs') }}</button></li>{% endif %}
+  {% if tabs.security %}<li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-security" type="button" role="tab">{{ t('settings.tab.security') }}</button></li>{% endif %}
+</ul>
+<div class="tab-content">
+  {% if tabs.users %}<div class="tab-pane fade show active" id="tab-users">{% include 'settings/_users.html' %}</div>{% endif %}
+  {% if tabs.action_logs %}<div class="tab-pane fade{% if not tabs.users %} show active{% endif %}" id="tab-action-logs">{% include 'settings/_action_logs.html' %}</div>{% endif %}
+  {% if tabs.error_logs %}<div class="tab-pane fade" id="tab-error-logs">{% include 'settings/_error_logs.html' %}</div>{% endif %}
+  {% if tabs.security %}<div class="tab-pane fade" id="tab-security">{% include 'settings/_security.html' %}</div>{% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

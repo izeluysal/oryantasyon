@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ aktif_dil }}" data-yerel-ayar="{{ yerel_ayar }}"
+<html lang="{{ aktif_dil }}" data-yerel-ayar="{{ yerel_ayar }}" data-network-error="{{ t('error.network') }}"
       data-theme="{{ 'dark' if current_user.is_authenticated and current_user.theme == 'dark' else 'light' }}">
 <head>
   <meta charset="utf-8">
@@ -111,7 +111,25 @@
     </div>
   </main>
 
+  <div class="modal fade" id="onayModal" tabindex="-1" aria-labelledby="onayModalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title fs-5" id="onayModalTitle"><i class="bi bi-question-circle me-2" aria-hidden="true"></i>{{ t('confirm.title') }}</h2>
+        </div>
+        <div class="modal-body" id="onayModalBody"></div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-secondary" id="onayModalCancel">{{ t('confirm.cancel') }}</button>
+          <button type="button" class="btn btn-primary" id="onayModalOk">{{ t('confirm.ok') }}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
   <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/table.js') }}"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

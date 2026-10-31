@@ -20,6 +20,15 @@ _pool_settings = None
 _pool_lock = threading.Lock()
 
 
+PER_PAGE = 500
+
+
+def like_pattern(text):
+    """Kullanıcı metnini ILIKE için güvenli arama kalıbına çevirir (joker karakterler kaçırılır)."""
+    escaped = text.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    return "%" + escaped + "%"
+
+
 def init_pool(settings):
     """Bağlantı ayarlarını saklar; havuz ilk kullanımda (tembel) kurulur."""
     global _pool_settings

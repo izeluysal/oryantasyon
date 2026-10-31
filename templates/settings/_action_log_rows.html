@@ -1,0 +1,13 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for row in rows %}
+<tr>
+  <td class="text-nowrap">{{ row.created_at | tarih_saat }}</td>
+  <td>{{ row.actor_name or '-' }}</td>
+  <td>{{ row.action }}</td>
+  <td>{{ row.entity_type or '-' }}{% if row.entity_id %} #{{ row.entity_id }}{% endif %}</td>
+  {% if not business %}<td>{{ row.business_name or t('log.platform') }}</td>{% endif %}
+  <td>{{ row.ip_address or '-' }}</td>
+</tr>
+{% else %}
+<tr><td colspan="{{ 5 if business else 6 }}">{{ empty_state(t('log.empty'), 'bi-journal-text') }}</td></tr>
+{% endfor %}

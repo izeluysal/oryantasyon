@@ -114,9 +114,9 @@ def create_app():
 
 def _register_blueprints(app):
     """Tüm route blueprint'lerini kaydeder."""
-    from app.routes import auth, business_context, dashboard, language, settings
+    from app.routes import auth, business_context, businesses, dashboard, deleted_report, language, settings
 
-    for module in (auth, dashboard, settings, business_context, language):
+    for module in (auth, dashboard, settings, business_context, language, businesses, deleted_report):
         app.register_blueprint(module.bp)
 
 

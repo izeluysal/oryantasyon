@@ -1,0 +1,42 @@
+{# Ortak arayüz makroları: kullanım bilgisi kutusu, boş durum, kolon filtreleri, sayaç kartı. #}
+
+{% macro kullanim_bilgisi(metin=none) %}
+<div class="alert alert-info d-flex gap-2 align-items-start" role="note">
+  <i class="bi bi-info-circle mt-1" aria-hidden="true"></i>
+  <div>{% if caller %}{{ caller() }}{% else %}{{ metin }}{% endif %}</div>
+</div>
+{% endmacro %}
+
+{% macro empty_state(mesaj, ikon='bi-inbox') %}
+<div class="empty-state text-center text-muted py-4">
+  <i class="bi {{ ikon }} fs-1 d-block mb-2" aria-hidden="true"></i>
+  <span>{{ mesaj }}</span>
+</div>
+{% endmacro %}
+
+{% macro kolon_filtresi(parametre, etiket, tumu, secenekler) %}
+<select class="form-select form-select-sm" data-kolon-filtre="{{ parametre }}" aria-label="{{ etiket }}">
+  <option value="">{{ tumu }}</option>
+  {% for deger, ad in secenekler %}<option value="{{ deger }}">{{ ad }}</option>{% endfor %}
+</select>
+{% endmacro %}
+
+{% macro kolon_filtre_temizle(tablo_id) %}
+<button type="button" class="btn btn-sm btn-outline-secondary d-inline-flex align-items-center" hidden
+        data-filtre-temizle="{{ tablo_id }}">
+  <i class="bi bi-x-lg me-1" aria-hidden="true"></i>{{ t('common.clear_filters') }}
+</button>
+{% endmacro %}
+
+{% macro sayac_karti(filtre, ikon, deger_id, etiket, aktif=False) %}
+<div class="col-sm-6 col-lg-4">
+  <button type="button" class="filtre-sayac{% if aktif %} active{% endif %}" data-filtre="{{ filtre }}"
+          aria-pressed="{{ 'true' if aktif else 'false' }}">
+    <span class="filtre-sayac-ikon"><i class="bi {{ ikon }}" aria-hidden="true"></i></span>
+    <span>
+      <span class="filtre-sayac-deger" id="{{ deger_id }}">0</span>
+      <span class="filtre-sayac-ad">{{ etiket }}</span>
+    </span>
+  </button>
+</div>
+{% endmacro %}

@@ -1,5 +1,5 @@
 """Sidebar menü verisi: tek kaynak. Etiketler metin değil çeviri anahtarıdır."""
-from app.helpers.roles import ALL_ROLES
+from app.helpers.roles import ALL_ROLES, ROLE_ADMIN, ROLE_AUDITOR, ROLE_BUSINESS_ADMIN
 
 # endpoint: url_for hedefi; roles: görebilen roller; children: 2. seviye (grup ise endpoint verilmez).
 MENU_ITEMS = [
@@ -9,6 +9,27 @@ MENU_ITEMS = [
         "icon": "bi-speedometer2",
         "endpoint": "dashboard.index",
         "roles": ALL_ROLES,
+    },
+    {
+        "key": "businesses",
+        "label": "menu.businesses",
+        "icon": "bi-buildings",
+        "endpoint": "businesses.index",
+        "roles": (ROLE_ADMIN,),
+    },
+    {
+        "key": "deleted_report",
+        "label": "menu.deleted_report",
+        "icon": "bi-trash3",
+        "endpoint": "deleted_report.index",
+        "roles": (ROLE_ADMIN, ROLE_BUSINESS_ADMIN, ROLE_AUDITOR),
+    },
+    {
+        "key": "settings",
+        "label": "menu.settings",
+        "icon": "bi-gear",
+        "endpoint": "settings.index",
+        "roles": (ROLE_ADMIN, ROLE_BUSINESS_ADMIN, ROLE_AUDITOR),
     },
 ]
 
