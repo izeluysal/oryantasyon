@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{% block title %}{{ screen.title }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="text-muted small mb-1">{{ screen.module_name }} · {{ t('training.screen_label', code=screen.screen_code) }} · {{ position }} / {{ position_total }}</div>
+<div class="page-header">
+  <h1 class="page-title">{{ screen.title }}</h1>
+  <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('training.index') }}"><i class="bi bi-list-ul me-1" aria-hidden="true"></i>{{ t('training.back_to_list') }}</a>
+</div>
+{% include 'training/_hud.html' %}
+
+<div class="card mb-3">
+  <div class="card-body">
+    <ul class="training-bullets">
+      {% for bullet in screen.bullets %}<li>{{ bullet }}</li>{% endfor %}
+    </ul>
+    {% if screen.table_data %}
+    <div class="table-responsive"><table class="table table-sm">
+      {% for row in screen.table_data %}
+      {% set tag = 'th' if loop.first else 'td' %}
+      <tr>{% for cell in row %}<{{ tag }}>{{ cell }}</{{ tag }}>{% endfor %}</tr>
+      {% endfor %}
+    </table></div>
+    {% endif %}
+    {% if screen.note %}<div class="note-box"><i class="bi bi-info-circle me-2" aria-hidden="true"></i>{{ screen.note }}</div>{% endif %}
+    <div class="d-flex align-items-center gap-3 mt-3">
+      <span class="avatar" aria-hidden="true">M</span>
+      <audio controls preload="none" class="flex-grow-1" src="{{ url_for('static', filename='audio/' ~ screen.audio_file) }}" aria-label="{{ t('training.audio.aria') }}"></audio>
+    </div>
+    <details class="mt-2 text-muted">
+      <summary>{{ t('training.transcript') }}</summary>
+      <p class="mt-2 mb-0">{{ screen.voice_text }}</p>
+    </details>
+  </div>
+</div>
+
+{% if questions %}
+<h2 class="fs-5">{{ t('training.questions.title') }}
+  <span class="text-muted fs-6">· {{ screen.coins | sayi }} Ece-Coin{% if screen.is_critical %} · {{ t('training.critical_note') }}{% endif %}</span></h2>
+{% if remaining is not none %}
+<div class="training-timer" id="trainingTimer" role="timer" data-remaining="{{ remaining }}" data-late="{{ t('training.timer.late') }}" data-left="{{ t('training.timer.left') }}">
+  <i class="bi bi-hourglass-split me-1" aria-hidden="true"></i><span id="timerText"></span>
+</div>
+{% endif %}
+<div id="questionList" data-answer-url="{{ url_for('training.answer', training_screen_id=screen.training_screen_id) }}"
+     data-msg-wrong="{{ t('training.answer.wrong') }}" data-msg-correct="{{ t('training.answer.correct') }}"
+     data-msg-earned="{{ t('training.answer.earned') }}" data-msg-bonus="{{ t('training.answer.bonus') }}"
+     data-msg-level="{{ t('training.answer.level_up') }}" data-msg-badge="{{ t('training.answer.new_badge') }}"
+     data-msg-done="{{ t('training.answer.screen_done') }}">
+  {% for q in questions %}
+  {% set saved = answers.get(q.id) %}
+  <div class="q{% if saved and saved.is_correct %} done{% endif %}" data-question-id="{{ q.id }}"
+       data-solved="{{ 1 if saved and saved.is_correct else 0 }}">
+    <h3 class="fs-6 fw-semibold">{{ q.text }}</h3>
+    <div class="opts" data-options='{{ q.options | tojson | forceescape }}'></div>
+    <div class="fb" aria-live="polite"></div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="d-flex justify-content-between mt-4">
+  {% if previous_id %}<a class="btn btn-outline-secondary" href="{{ url_for('training.screen', training_screen_id=previous_id) }}"><i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{{ t('training.previous') }}</a>{% else %}<span></span>{% endif %}
+  <button type="button" class="btn btn-primary" id="nextBtn"
+          data-next-url="{{ url_for('training.screen', training_screen_id=next_id) if next_id else url_for('training.certificate') }}"
+          data-complete-url="{{ url_for('training.complete', training_screen_id=screen.training_screen_id) }}"
+          data-has-questions="{{ 1 if questions else 0 }}" data-done="{{ 1 if done else 0 }}"{% if questions and not done %} disabled{% endif %}>
+    {{ t('training.next') if next_id else t('training.finish') }}<i class="bi bi-arrow-right ms-1" aria-hidden="true"></i>
+  </button>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/training.js') }}"></script>
+{% endblock %}

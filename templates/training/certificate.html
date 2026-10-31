@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('training.certificate') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header noprint">
+  <h1 class="page-title">{{ t('training.certificate.page_title') }}</h1>
+  <div class="btn-group btn-group-sm">
+    <a class="btn btn-outline-secondary" href="{{ url_for('training.index') }}"><i class="bi bi-list-ul me-1" aria-hidden="true"></i>{{ t('training.back_to_list') }}</a>
+    <button type="button" class="btn btn-primary" onclick="window.print()"><i class="bi bi-printer me-1" aria-hidden="true"></i>{{ t('training.certificate.print') }}</button>
+  </div>
+</div>
+<p class="noprint">{{ t('training.certificate.intro') }}</p>
+<div class="cert" id="cert">
+  <h2>{{ t('training.certificate.heading') }}</h2>
+  <div>{{ t('app.name') }} · {{ t('training.certificate.course') }}</div>
+  <div class="big">{{ current_user.full_name }}</div>
+  <div>{{ t('training.certificate.statement') }}</div>
+  <p class="mt-3"><strong>{{ totals.coins | sayi }} / {{ total_coins | sayi }}</strong> Ece-Coin · {{ t('training.hud.level') }}: <strong>{{ totals.level }}</strong></p>
+  <p>{{ t('training.certificate.badges') }}: {% if totals.badges %}{{ totals.badges | map(attribute='label') | join(', ') }}{% else %}-{% endif %}</p>
+  <p>{{ t('training.certificate.business') }}: {{ business.business_name }} · {{ finished | tarih }}</p>
+  <small>{{ t('training.certificate.disclaimer') }}</small>
+</div>
+{% endblock %}

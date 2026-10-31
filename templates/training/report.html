@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi, kolon_filtre_temizle, sayac_karti, empty_state %}
+{% block title %}{{ t('menu.training_report') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('menu.training_report') }}</h1>
+</div>
+{% if not has_business %}
+<div class="card"><div class="card-body">{{ empty_state(t('training.report.pick_business'), 'bi-building') }}</div></div>
+{% else %}
+{% call kullanim_bilgisi() %}{{ t('training.report.usage_info_html') | safe }}{% endcall %}
+<div class="row g-3 mb-3" role="group" aria-label="{{ t('training.report.counter.aria') }}">
+  {{ sayac_karti('', 'bi-people', 'reportCountAll', t('training.report.counter.all'), True) }}
+  {{ sayac_karti('completed', 'bi-patch-check', 'reportCountCompleted', t('training.report.counter.completed')) }}
+  {{ sayac_karti('in_progress', 'bi-hourglass-split', 'reportCountProgress', t('training.report.counter.in_progress')) }}
+  {{ sayac_karti('not_started', 'bi-circle', 'reportCountNotStarted', t('training.report.counter.not_started')) }}
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <div class="table-toolbar">
+      <div class="filters">
+        <input type="search" class="form-control" id="reportSearch" placeholder="{{ t('common.search') }}"
+               aria-label="{{ t('common.search') }}" maxlength="100">
+        {{ kolon_filtre_temizle('reportTable') }}
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <span class="text-muted small" id="reportTotal" aria-live="polite"></span>
+        {% if can_export %}<a class="btn btn-sm btn-outline-secondary" id="reportExport" href="{{ url_for('training.report_export') }}"><i class="bi bi-file-earmark-excel me-1" aria-hidden="true"></i>{{ t('common.export_excel') }}</a>{% endif %}
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0" id="reportTable">
+        <thead><tr>
+          <th>{{ t('training.report.field.user') }}</th><th class="text-end">{{ t('training.report.field.screens') }}</th>
+          <th class="text-end">{{ t('training.report.field.coins') }}</th><th>{{ t('training.report.field.level') }}</th>
+          <th class="text-end">{{ t('training.report.field.accuracy') }}</th><th>{{ t('training.report.field.finished') }}</th>
+          <th>{{ t('training.report.field.badges') }}</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="table-pager" id="reportPager" hidden></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header fw-semibold"><i class="bi bi-exclamation-triangle me-2" aria-hidden="true"></i>{{ t('training.report.hardest') }}</div>
+  <div class="card-body">
+    <p class="text-muted small">{{ t('training.report.hardest.note') }}</p>
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead><tr><th>{{ t('training.report.field.screen') }}</th><th class="text-end">{{ t('training.report.field.answered') }}</th><th class="text-end">{{ t('training.report.field.accuracy') }}</th></tr></thead>
+        <tbody>
+          {% for row in hardest %}
+          <tr><td>{{ row.screen_code }} · {{ row.title }}</td><td class="text-end">{{ row.answered | sayi }}</td><td class="text-end">%{{ row.rate | int }}</td></tr>
+          {% else %}
+          <tr><td colspan="3">{{ empty_state(t('training.report.empty_hardest'), 'bi-bar-chart') }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if has_business %}<script src="{{ url_for('static', filename='js/report.js') }}"></script>{% endif %}
+{% endblock %}

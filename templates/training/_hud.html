@@ -1,0 +1,23 @@
+{# Ece-Coin göstergesi: sunucu ilk durumu basar, training.js yanıtlardan sonra günceller. #}
+<div class="training-hud" id="trainingHud" data-total="{{ totals.total }}">
+  <div class="hud-item">
+    <i class="bi bi-coin hud-icon" aria-hidden="true"></i>
+    <div><span class="hud-value" id="hudCoins">{{ totals.coins | sayi }}</span>
+      <span class="hud-label">{{ t('training.hud.coins') }}</span></div>
+  </div>
+  <div class="hud-item">
+    <i class="bi bi-award hud-icon" aria-hidden="true"></i>
+    <div><span class="hud-value" id="hudLevel">{{ totals.level }}</span>
+      <span class="hud-label">{{ t('training.hud.level') }}</span></div>
+  </div>
+  <div class="hud-item hud-progress">
+    <div class="progress" role="progressbar" aria-label="{{ t('training.hud.progress') }}" aria-valuemin="0"
+         aria-valuemax="{{ totals.total }}" aria-valuenow="{{ totals.done }}" id="hudProgressBar">
+      <div class="progress-bar" id="hudProgress" style="width: {{ (100 * totals.done / totals.total) | round | int }}%"></div>
+    </div>
+    <span class="hud-label"><span id="hudDone">{{ totals.done }}</span> / {{ totals.total }} {{ t('training.hud.screens') }}</span>
+  </div>
+  <div class="hud-item hud-badges" id="hudBadges">
+    {% for badge in totals.badges %}<span class="badge text-bg-warning"><i class="bi bi-star-fill me-1" aria-hidden="true"></i>{{ badge.label }}</span>{% endfor %}
+  </div>
+</div>

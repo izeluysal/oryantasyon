@@ -24,6 +24,10 @@ CSRF_PATTERN = re.compile(r'name="csrf_token" value="([^"]+)"')
 def cleanup():
     """Önekli tüm test verisini tek bağlantı ve tek transaction içinde siler."""
     with get_cursor() as cursor:
+        cursor.execute("DELETE FROM training_answers WHERE user_id IN (SELECT user_id FROM users WHERE email LIKE %s)",
+                       (PREFIX + "%",))
+        cursor.execute("DELETE FROM training_progress WHERE user_id IN (SELECT user_id FROM users WHERE email LIKE %s)",
+                       (PREFIX + "%",))
         cursor.execute("DELETE FROM userslogs WHERE user_id IN (SELECT user_id FROM users WHERE email LIKE %s)",
                        (PREFIX + "%",))
         cursor.execute("DELETE FROM userslogs WHERE business_id IN "

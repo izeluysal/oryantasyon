@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{% block title %}{{ t('menu.training') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('training.title') }}</h1>
+  <div class="btn-group btn-group-sm">
+    {% if next_screen %}
+    <a class="btn btn-primary" href="{{ url_for('training.screen', training_screen_id=next_screen.training_screen_id) }}"><i class="bi bi-play-fill me-1" aria-hidden="true"></i>{{ t('training.continue') if state.done_ids else t('training.start') }}</a>
+    {% elif state.all_done %}
+    <a class="btn btn-primary" href="{{ url_for('training.certificate') }}"><i class="bi bi-award me-1" aria-hidden="true"></i>{{ t('training.certificate') }}</a>
+    {% endif %}
+  </div>
+</div>
+{% call kullanim_bilgisi() %}{{ t('training.index.usage_info_html', coins=total_coins) | safe }}{% endcall %}
+{% include 'training/_hud.html' %}
+
+{% for module_name, items in modules.items() %}
+<div class="card mb-3">
+  <div class="card-header fw-semibold">{{ module_name }}</div>
+  <ul class="list-group list-group-flush training-screen-list">
+    {% for item in items %}
+    <li class="list-group-item d-flex align-items-center justify-content-between">
+      <div class="d-flex align-items-center">
+        {% if item.done %}<i class="bi bi-check-circle text-success me-3" aria-hidden="true"></i><span class="visually-hidden">{{ t('training.status.done') }}</span>
+        {% elif item.unlocked %}<i class="bi bi-play-circle text-primary me-3" aria-hidden="true"></i><span class="visually-hidden">{{ t('training.status.open') }}</span>
+        {% else %}<i class="bi bi-lock text-muted me-3" aria-hidden="true"></i><span class="visually-hidden">{{ t('training.status.locked') }}</span>{% endif %}
+        <div>
+          <div>{{ item.screen.title }}</div>
+          <div class="text-muted small">{{ item.screen.screen_code }}{% if item.screen.coins %} · {{ item.screen.coins | sayi }} Ece-Coin{% endif %}{% if item.screen.is_critical %} · {{ t('training.critical') }}{% endif %}</div>
+        </div>
+      </div>
+      {% if item.unlocked %}
+      <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('training.screen', training_screen_id=item.screen.training_screen_id) }}">{{ t('training.review') if item.done else t('training.open') }}</a>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+{% endblock %}

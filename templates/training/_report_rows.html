@@ -1,0 +1,14 @@
+{% from 'macros/ui.html' import empty_state %}
+{% for row in rows %}
+<tr>
+  <td>{{ row.full_name }}<div class="text-muted small">{{ row.email }}</div></td>
+  <td class="text-end">{{ row.done }} / {{ row.total }}</td>
+  <td class="text-end">{{ row.coins | sayi }}</td>
+  <td>{{ row.level }}</td>
+  <td class="text-end">{% if row.answered %}%{{ row.accuracy }}{% else %}-{% endif %}</td>
+  <td>{{ (row.finished_at | tarih) or '-' }}</td>
+  <td>{% for badge in row.badges %}<span class="badge text-bg-warning me-1"><i class="bi bi-star-fill me-1" aria-hidden="true"></i>{{ badge }}</span>{% else %}-{% endfor %}</td>
+</tr>
+{% else %}
+<tr><td colspan="7">{{ empty_state(t('training.report.empty'), 'bi-people') }}</td></tr>
+{% endfor %}
