@@ -639,7 +639,7 @@ Bu e-öğrenmeyi tamamlamak, tek başına bir ölçüm yönteminde bağımsız �
 
 ### 9.1 Teknik Yayın Standartları
 * **Paket formatı:** Kurumun LMS'si ve raporlama ihtiyacına göre SCORM 1.2, SCORM 2004 veya xAPI seçilir; tek bir seçenek tüm LMS'lerle uyumlu varsayılmaz.
-* **Uygulanan çözüm:** Program (`program/`) SCORM 1.2 olarak paketlenmiştir (durum, 0–100 puan, konum ve `suspend_data`); LMS yoksa şirket içi web sitesi ve `yonetici.html` raporuyla kullanılır. Gerçek LMS'de pilot doğrulama gereklidir.
+* **Uygulanan çözüm:** Program, kendi başına çalışan bir web uygulamasıdır (Flask, PostgreSQL, Bootstrap, Docker). Öğrenme kayıtları (ilerleme, yanıtlar, Ece-Coin) veritabanında işletme ve kullanıcı bazında tutulur; puan, seviye ve rozet kararları sunucuda verilir. LMS aracılığı gerekmez: yöneticiler ilerlemeyi uygulama içindeki **Eğitim Raporu** ekranından izler (arama, durum kartları, Excel dışa aktarım, en çok zorlanılan ekranlar). SCORM/xAPI paketi bu sürümde yoktur; kurum bir LMS'ye entegrasyon isterse ayrıca tasarlanır.
 * **Görüntüleme:** Duyarlı HTML5 içerik; masaüstü, tablet ve telefon ekranlarında test edilir.
 * **Uyumluluk:** Kullanılacak yazarlama aracı ve LMS sürümü, gerçek test ortamında paket yükleme ve kayıt senaryolarıyla doğrulanır.
 * **Ses:** Seslendirme için kullanılan format ve kalite, yazarlama aracının/LMS'nin gereksinimine göre belirlenir; tüm seslere senkronize metin dökümü veya altyazı sağlanır.
@@ -647,7 +647,7 @@ Bu e-öğrenmeyi tamamlamak, tek başına bir ölçüm yönteminde bağımsız �
 ### 9.2 Başarı Metrikleri
 * **Başarı kuralı:** Kurumun LMS yöneticisi ve kalite birimi belirler. Öneri olarak modül sonlarında en az %80; kritik İSG ve etik senaryolarında ise kritik adımların tamamının doğru yapılması kullanılabilir.
 * **Süre:** İçeriğin pilot uygulamasından sonra ölçülür; modüler ve duraklatılabilir tasarlanır.
-* **Takip edilen veriler:** Başlama/tamamlama zamanı, modül ilerlemesi, quiz sonucu, tekrar sayısı ve içerik revizyonu. SCORM'da ilgili `cmi.*` alanları seçilen sürüme göre uygulanır.
+* **Takip edilen veriler:** Başlama/tamamlama zamanı, modül ilerlemesi, quiz sonucu, tekrar sayısı ve içerik revizyonu. Veriler `training_progress` ve `training_answers` tablolarında tutulur.
 * **Geri bildirim:** Yanlış yanıtta doğru seçeneği göstermekle kalma; katılımcıyı ilgili öğrenme kartına geri yönlendir ve tekrar deneme sun.
 * **Erişilebilirlik:** Klavye ile kullanım, yeterli kontrast, ekran okuyucuya uygun etiketler, altyazı/transkript ve mobil uyum test edilir.
 * **Güncelleme:** Akreditasyon kapsamı, mevzuat, hizmet, adres veya şirket prosedürü değiştiğinde içerik sahibi inceleme başlatır; eski sürümler yürürlükten kaldırılır.

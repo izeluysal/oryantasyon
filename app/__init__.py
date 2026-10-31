@@ -11,7 +11,7 @@ from flask_login import LoginManager, current_user, logout_user
 from flask_wtf.csrf import CSRFError, CSRFProtect
 from werkzeug.middleware.proxy_fix import ProxyFix
 
-from app import db
+from app import db, scheduler
 from app.helpers import format as formatting
 from app.helpers.roles import ROLE_ADMIN
 from app.i18n import (
@@ -109,6 +109,8 @@ def create_app():
     _register_context(app)
     _register_error_handlers(app)
     _seed(app)
+    if os.environ.get("APP_DISABLE_SCHEDULER") != "1":
+        scheduler.start(app)
     return app
 
 

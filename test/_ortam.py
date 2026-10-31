@@ -7,6 +7,8 @@ from contextlib import contextmanager
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+# Testler kendi zamanlayıcısını başlatmaz; görev fonksiyonları doğrudan çağrılır.
+os.environ["APP_DISABLE_SCHEDULER"] = "1"
 
 from werkzeug.security import generate_password_hash  # noqa: E402
 
@@ -36,6 +38,7 @@ def cleanup():
                        (PREFIX + "%", TEST_IP_PREFIX + "%"))
         cursor.execute("DELETE FROM ip_blocks WHERE ip_address LIKE %s", (TEST_IP_PREFIX + "%",))
         cursor.execute("DELETE FROM error_log WHERE url LIKE %s", ("/" + PREFIX + "%",))
+        cursor.execute("DELETE FROM userslogs WHERE action LIKE %s", (PREFIX + "%",))
         cursor.execute("UPDATE businesses SET business_admin_user_id = NULL WHERE business_name LIKE %s",
                        (PREFIX + "%",))
         cursor.execute("DELETE FROM config WHERE business_id IN "

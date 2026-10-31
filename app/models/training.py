@@ -298,7 +298,8 @@ class Training:
             "a AS (SELECT DISTINCT user_id FROM training_answers WHERE business_id = %s) "
             "SELECT count(*) AS total, count(*) FILTER (WHERE coalesce(p.done, 0) = t.total) AS completed, "
             "count(*) FILTER (WHERE coalesce(p.done, 0) < t.total "
-            "AND (coalesce(p.done, 0) > 0 OR a.user_id IS NOT NULL)) AS in_progress, count(*) FILTER (WHERE coalesce(p.done, 0) = 0 AND a.user_id IS NULL) AS not_started "
+            "AND (coalesce(p.done, 0) > 0 OR a.user_id IS NOT NULL)) AS in_progress, "
+            "count(*) FILTER (WHERE coalesce(p.done, 0) = 0 AND a.user_id IS NULL) AS not_started "
             "FROM users u CROSS JOIN t LEFT JOIN p ON p.user_id = u.user_id LEFT JOIN a ON a.user_id = u.user_id "
             "WHERE u.business_id = %s AND u.is_deleted = FALSE AND u.role = ANY(%s)",
             (business_id, business_id, business_id, list(LEARNER_ROLES)),
