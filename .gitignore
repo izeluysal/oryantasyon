@@ -1,4 +1,13 @@
-video/out/tmp/
+config.json
+.env
+*.key
+*.pem
 __pycache__/
+*.pyc
+.DS_Store
+logs/
+venv/
+.venv/
+.claude/
 dist/
 video/out/

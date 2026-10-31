@@ -440,7 +440,7 @@ Teklif veya yönlendirme öncesinde şu bilgileri topla:
 * **Ekran Türü:** Çoktan seçmeli
 * **Soru:** Müşteri başka bir firmanın cihazına ait sonucu soruyor. Doğru yanıt hangisidir?
   * A) Kısaca söyleyip konuyu kapatırım.
-  * **B) Diğer müşterilere ait bilgi paylaşamayacağımı, yalnızca yetkisi doğrulanan kendi cihaz kayıtlarının incelenebileceğini söylerim.** ✔
+  * **B) Diğer müşterilere ait bilgi paylaşamayacağımı, yalnızca yetkisi doğrulanan kendi cihaz kayıtlarının incelenebileceğini söylerim.** (doğru yanıt)
   * C) Sonucu e-postayla gönderirim ama kimseye söylemem.
 * **Geri bildirim:** Doğru yanıtta "+100 Ece-Coin"; yanlış yanıtta Ekran 4.3 öğrenme kartına yönlendirme ve tekrar deneme.
 
