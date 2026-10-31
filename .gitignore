@@ -1,0 +1,4 @@
+video/out/tmp/
+__pycache__/
+dist/
+video/out/

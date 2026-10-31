@@ -6,19 +6,21 @@
 
 ## İÇİNDEKİLER
 
-1. [PROJE GENEL BAKIŞI VE KURUMSAL KİMLİK](#1-proje-genel-bakişi-ve-kurumsal-ki̇mli̇k)
-2. [OYUNLAŞTIRMA (GAMIFICATION) VE HİKAYE MİMARİSİ](#2-oyunlaştirma-gamification-ve-hi̇kaye-mi̇mari̇si̇)
-3. [MODÜL 1: AİLEYE HOŞ GELDİN VE KALİTE KÜLTÜRÜ](#modül-1-aileye-hoş-geldin-ve-kalite-kültürü)
-4. [MODÜL 2: METROLOJİ, KALİBRASYON VE BELİRSİZLİK](#modül-2-metroloji-kalibrasyon-ve-belirsizlik)
-5. [MODÜL 3: HİZMETLER, AKREDİTASYON VE İŞ AKIŞI](#modül-3-hizmetler-akreditasyon-ve-iş-akışı)
-6. [MODÜL 4: MÜŞTERİ İLETİŞİMİ VE MESLEKİ ETİK](#modül-4-müşteri-i̇letişimi-ve-mesleki-etik)
-7. [MODÜL 5: ÇALIŞAN REHBERİ, İSG VE SAHA GÜVENLİĞİ](#modül-5-çalışan-rehberi-i̇sg-ve-saha-güvenliği)
-8. [MODÜL 6: UYGULAMALI FİNAL GÖREVİ](#modül-6-uygulamali-final-görevi)
-9. [MODÜL 7: İŞBAŞI ÖĞRENME VE YETKİNLİK](#modül-7-i̇şbaşı-öğrenme-ve-yetkinlik)
-10. [MODÜL 8: TERİMLER, KAYNAKLAR VE BİLGİ GÜNCELLEME](#modül-8-terimler-kaynaklar-ve-bilgi-güncelleme)
-11. [LMS YÖNETİMİ, SCORM VE TEKNİK UYARLAMA](#lms-yönetimi-scorm-ve-teknik-uyarlama)
+1. [PROJE GENEL BAKIŞI VE KURUMSAL KİMLİK](#bolum-1)
+2. [OYUNLAŞTIRMA (GAMIFICATION) VE HİKAYE MİMARİSİ](#bolum-2)
+3. [MODÜL 1: AİLEYE HOŞ GELDİN VE KALİTE KÜLTÜRÜ](#modul-1)
+4. [MODÜL 2: METROLOJİ, KALİBRASYON VE BELİRSİZLİK](#modul-2)
+5. [MODÜL 3: HİZMETLER, AKREDİTASYON VE İŞ AKIŞI](#modul-3)
+6. [MODÜL 4: MÜŞTERİ İLETİŞİMİ VE MESLEKİ ETİK](#modul-4)
+7. [MODÜL 5: ÇALIŞAN REHBERİ, İSG VE SAHA GÜVENLİĞİ](#modul-5)
+8. [MODÜL 6: UYGULAMALI FİNAL GÖREVİ](#modul-6)
+9. [MODÜL 7: İŞBAŞI ÖĞRENME VE YETKİNLİK](#modul-7)
+10. [MODÜL 8: TERİMLER, KAYNAKLAR VE BİLGİ GÜNCELLEME](#modul-8)
+11. [LMS YÖNETİMİ, SCORM VE TEKNİK UYARLAMA](#lms)
 
 ---
+
+<a id="bolum-1"></a>
 
 ## 1. PROJE GENEL BAKIŞI VE KURUMSAL KİMLİK
 
@@ -42,6 +44,8 @@ Bu eğitimde adresler, hizmetler, kapsam ve geçerlilik tarihleri kurumsal kayna
 
 ---
 
+<a id="bolum-2"></a>
+
 ## 2. OYUNLAŞTIRMA (GAMIFICATION) VE HİKAYE MİMARİSİ
 
 Eğitim, düz metin aktarımı yerine çalışanın aktif rol aldığı bir simülasyon olarak tasarlanmıştır.
@@ -59,7 +63,37 @@ Eğitim, düz metin aktarımı yerine çalışanın aktif rol aldığı bir sim�
   * *Termal Haritalama Danışmanı*
   * *Akreditasyon ve Etik Lideri*
 
+### 2.2 Ece-Coin Dağılım Tablosu (Toplam 4000)
+
+| Bölüm | Kazanım | Ece-Coin |
+|---|---|---|
+| Modül 1 | 1.1 başlangıç (100), 1.3 üç kart (3×50), 1.4 senaryo (150) | 400 |
+| Modül 2 | 2.1 (150), 2.3 (100), 2.4 (150), 2.5 (200), 2.6 (200) | 800 |
+| Modül 3 | 3.2 (150), 3.3 (100), 3.4 (100), 3.5 (150) | 500 |
+| Modül 4 | 4.2 (100), 4.3 (200), 4.4 (100), 4.5 (100) | 500 |
+| Modül 5 | 5.1 (100), 5.2 (200), 5.3 (200) | 500 |
+| Modül 6 | 6.1 simülasyon (500), 6.3 final vaka (400) | 900 |
+| Modül 7 | 7.2 kontrol listesi eşleştirme | 200 |
+| Modül 8 | 8.1 sözlük eşleştirme (100), 8.2 kaynak kontrolü (100) | 200 |
+| **Toplam** | | **4000** |
+
+* **Kural:** Yanlış yanıtta coin düşülmez; ilgili öğrenme kartı tekrar gösterilir ve ikinci denemede coin yarıya iner.
+* **Kritik senaryolar (1.4, 5.3, 6.3):** Coin kazanmak yeterli değildir; kritik adımların tamamı doğru olmadan modül tamamlanmış sayılmaz.
+
+### 2.3 Rozet Kazanma Koşulları
+
+| Rozet | Koşul |
+|---|---|
+| İSG & Temiz Oda Hijyen Şampiyonu | 5.2 ve 5.3'ün tüm adımlarının doğru tamamlanması |
+| Hassas Tartı & Kütle Ustası | 2.3, 2.4 ve 2.5'in ilk denemede doğru tamamlanması (ölçüm sonucu, belirsizlik, sertifika okuma) |
+| Termal Haritalama Danışmanı | 3.3 ve 3.5'in doğru tamamlanması (saha/laboratuvar kararı, validasyon ayrımı) |
+| Akreditasyon ve Etik Lideri | 1.3, 1.4 ve 6.3'ün doğru tamamlanması |
+
+> Not: Rozet adları motivasyon amaçlıdır; eğitim, adı geçen alanlarda yetkinlik veya yetkilendirme sağlamaz (bkz. Modül 7).
+
 ---
+
+<a id="modul-1"></a>
 
 ## MODÜL 1: AİLEYE HOŞ GELDİN VE KALİTE KÜLTÜRÜ
 
@@ -82,8 +116,8 @@ Eğitim, düz metin aktarımı yerine çalışanın aktif rol aldığı bir sim�
 
 * **Seslendirme (Voice-Over Transkripti):**
   > *"Merhaba! Ece Kalibrasyon ailesine hoş geldin! Laf aramızda kalmasın herkes duysun; son derece hassas, dikkat isteyen ama bir o kadar da gurur verici bir mesleğe ilk adımını attın.
-  > 2010 yılından bu yana İstanbul Sancaktepe merkezimiz, Sakarya ve Antalya şubelerimiz, İzmir ve Muğla/Aydın temsilciliklerimizle Türkiye sanayisine ve sağlık sektörüne yön veriyoruz.
-  > Biz burada sadece cihaz ölçmüyoruz; fabrikaların üretim kalitesini, hastanelerdeki yaşam destek cihazlarının güvenliğini ve ilaç depolarının standartlarını koruyoruz. Hazırsan ilk görevine başlayalım!"*
+  > 2010 yılından bu yana İstanbul Sancaktepe merkezimiz, Sakarya ve Antalya şubelerimiz, İzmir ve Muğla-Aydın temsilciliklerimizle sağlık, üretim, yapı ve teknoloji alanlarındaki kuruluşlara hizmet veriyoruz.
+  > Biz burada sadece cihaz ölçmüyoruz; ölçüm sonuçlarına duyulan güveni koruyoruz. Hazırsan ilk görevine başlayalım!"*
 
 ---
 
@@ -135,7 +169,12 @@ Eğitim, düz metin aktarımı yerine çalışanın aktif rol aldığı bir sim�
 
 * **Mini kontrol:** “Müşterinin istediği şekilde raporu düzenlemek müşteri memnuniyetidir.” **Yanlış.** Müşteri memnuniyeti, tarafsız ve güvenilir hizmetin yerine geçmez.
 
+* **Seslendirme:**
+  > *"Teslim tarihi ne kadar sıkışık olursa olsun, sonucu değiştirmek bir seçenek değildir. Ölçümü ve kayıtları olduğu gibi koru, durumu yetkili kişiye bildir, müşteriyle yalnızca doğrulanmış bilgiyi paylaş. Hata fark edersen gizleme; kaydet ve süreci başlat. Güvenilirlik, laboratuvarın en değerli varlığıdır."*
+
 ---
+
+<a id="modul-2"></a>
 
 ## MODÜL 2: METROLOJİ, KALİBRASYON VE BELİRSİZLİK
 
@@ -178,6 +217,10 @@ $$\text{SI birimleri} \longrightarrow \text{Ulusal metroloji enstitüsü / uygun
 
 **Önemli ayrım:** Ölçüm hatası tek bir ölçüm için bilinemez; çünkü referans değerin de belirsizliği vardır. Sertifikadaki ölçüm sonucu ve belirsizlik, cihaz performansının değerlendirilmesine yardımcı olur; tüm kullanım koşullarını tek başına temsil etmez.
 
+* **Seslendirme:**
+  > *"Bir örnek: referans değer yüz birim, cihaz yüz virgül on iki birim gösteriyor. Gösterge eksi referans, artı sıfır virgül on iki birim hata verir; düzeltme ise bunun tersidir, eksi sıfır virgül on iki. Ama sertifikada hangi terimin ve hangi işaretin kullanıldığını her zaman raporun kendi açıklamasından doğrula."*
+* **Etkileşim:** Katılımcı hata ve düzeltme değerlerini sürükleyerek doğru kutulara yerleştirir.
+
 ### Ekran 2.4: Ölçüm Belirsizliğine İlk Bakış
 * **Ekran Türü:** Katkı bileşenlerini birleştirme etkileşimi
 
@@ -188,6 +231,10 @@ $$\text{SI birimleri} \longrightarrow \text{Ulusal metroloji enstitüsü / uygun
 * **Genişletilmiş belirsizlik (`U`):** Birleşik standart belirsizliğin kapsama faktörü `k` ile çarpımıdır: `U = k × u_c`. `k` ve kapsama bilgisi rapor/prosedürden okunmalıdır; `k = 2` her bağlamda otomatik bir garanti değildir.
 
 **Temsili hesap:** Bağımsız olduğu varsayılan `0,10` ve `0,20` birimlik iki standart belirsizlik katkısı için `u_c = √(0,10² + 0,20²) ≈ 0,224 birim`. Bu yalnızca kareler toplamı yaklaşımını öğretmek için hazırlanmış örnektir; gerçek sertifika hesabı değildir.
+
+* **Seslendirme:**
+  > *"Ölçüm belirsizliği, hata payı ya da cihazın toleransı değildir. Sonuca atfedilebilecek değerlerin dağılımını anlatır. Bileşenler birleştirilir; sonra kapsama faktörüyle çarpılarak genişletilmiş belirsizlik bulunur. Kapsama faktörü her raporda yazılıdır, ezbere varsayma."*
+* **Etkileşim:** Katılımcı 0,10 ve 0,20 birimlik iki katkıyı birleştirir; doğru sonuç yaklaşık 0,224 birimdir.
 
 ### Ekran 2.5: Kalibrasyon Sertifikası Nasıl Okunur?
 * **Ekran Türü:** Sertifika üzerinde işaretleme
@@ -202,6 +249,9 @@ Bir raporu incelerken sırayla şunları kontrol et:
 
 **Dikkat:** Kalibrasyon sertifikası, ayrıca belirtilmedikçe cihazın “kullanıma uygundur” kararı veya uygunluk beyanı ile aynı şey değildir. Kalibrasyon aralığı da her cihaz için sabit ve evrensel bir süre değildir; kullanıcı risk, kullanım sıklığı, geçmiş performans ve kalite sistemi gerekliliklerine göre belirlemelidir.
 
+* **Seslendirme:**
+  > *"Sertifikayı okurken altı soruyu sor: Kimlik doğru mu? Kapsam ve yöntem uyuyor mu? Koşullar yeterli mi? Sonuçlar ve birimler açık mı? Belirsizlik ve izlenebilirlik yazılı mı? Onay ve revizyon bilgisi tamam mı? Unutma, kalibrasyon sertifikası kendi başına 'kullanıma uygundur' demek değildir."*
+
 ### Ekran 2.6: Uygunluk Kararı ve Tolerans
 * **Ekran Türü:** İki sonuçlu karar simülasyonu
 
@@ -213,7 +263,13 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 
 **Kural:** Belirsizliği görmezden gelip yalnızca ölçülen değer toleransın içinde diye otomatik uygunluk ilan etme. Karar kuralı rapor, sözleşme, standart ve laboratuvar prosedürüne uygun olmalı; müşteri iletişimi de bu kuralı açıkça belirtmelidir.
 
+* **Seslendirme:**
+  > *"Ölçülen değer tolerans içinde diye otomatik olarak uygun demek doğru değildir. Önce hangi özelliğin değerlendirildiğine, belirsizliğin nasıl hesaba katılacağına ve hangi karar kuralının geçerli olduğuna bak. Sonuç, bu kurala göre uygun, uygun değil ya da karar vermek için yetersiz olabilir."*
+* **Etkileşim:** İki örnek ölçüm, belirsiz karar kuralıyla birlikte sunulur; katılımcı her biri için "uygun / uygun değil / karar için yetersiz" seçer.
+
 ---
+
+<a id="modul-3"></a>
 
 ## MODÜL 3: HİZMETLER, AKREDİTASYON VE İŞ AKIŞI
 
@@ -253,6 +309,8 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 5. **Sonucu gözden geçir:** Hesapları, birimleri, cihaz kimliğini, belirsizliği, kapsamı ve rapor bütünlüğünü kontrol et.
 6. **Kapat ve öğren:** Cihazı güvenle iade et; uygunsuzluk veya müşteri geri bildirimi varsa kayıt ve iyileştirme sürecini başlat.
 
+* **Seslendirme:**
+  > *"Her iş aynı yolu izler: talebi anla, yapılabilirliği ve kapsamı teyit et, cihazı doğru tanımla, ölçümü onaylı yöntemle yürüt, sonucu gözden geçir, işi kapat ve geri bildirimden öğren. Bu zincirin her halkası, raporun güvenilirliğini oluşturur."*
 * **Etkileşim:** Katılımcı “cihazın seri numarası raporda uyuşmuyor” kartını doğru adıma sürükler. Beklenen yanıt: rapor yayımlanmadan önce kimlik ve iş emri kontrolünde fark edilir; yayımlandıysa kontrollü düzeltme/yeniden yayımlama prosedürü izlenir.
 
 ### Ekran 3.3: Laboratuvar Kalibrasyonu mu, Yerinde Hizmet mi?
@@ -264,6 +322,10 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 * Sahadaki koşullar ölçüm belirsizliğini veya yöntemin uygulanmasını etkiliyor mu?
 
 **Öğrenme notu:** Yerinde hizmet her cihaz ve koşul için otomatik olarak uygun değildir. Karar teknik gözden geçirme, müşteri ihtiyacı, yöntem ve iş güvenliği değerlendirmesiyle verilir.
+
+* **Seslendirme:**
+  > *"Laboratuvarda mı, yerinde mi? Cihaz taşınınca performansı değişebilir mi, nakil riski var mı, sahada referans, enerji, erişim ve çevre koşulları sağlanabilir mi? Bu soruların yanıtı teknik gözden geçirmeyle verilir. Yerinde hizmet her cihaz için uygun değildir."*
+* **Etkileşim:** Üç cihaz kartı karar ağacında "laboratuvar" veya "yerinde" yoluna yönlendirilir.
 
 ### Ekran 3.4: Pekiştirme Quizi (Micro-Quiz)
 * **Ekran Türü:** İnteraktif Soru Ekranı & Maskot Animasyonu
@@ -296,7 +358,13 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 
 **Kural:** Teknik kapsam, kabul ölçütü veya akreditasyon durumu belirsizse müşteri adına yorum üretme; ilgili teknik sorumluya yönlendir.
 
+* **Seslendirme:**
+  > *"Kalibrasyon, referansla cihaz arasındaki ilişkiyi ve belirsizliği belirler. Validasyon, bir sistemin veya alanın amacına uygunluğunu kabul ölçütleriyle kanıtlar. Bakım ve onarım işlevi korur veya arızayı giderir. Ayarlama ise göstergeye müdahaledir. Bunları birbirine karıştırma; emin değilsen teknik sorumluya yönlendir."*
+* **Etkileşim:** Dört kavram kartı, dört tanımla eşleştirilir.
+
 ---
+
+<a id="modul-4"></a>
 
 ## MODÜL 4: MÜŞTERİ İLETİŞİMİ VE MESLEKİ ETİK
 
@@ -315,7 +383,7 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 ```
 
 * **Seslendirme (Voice-Over Transkripti):**
-  > *"Laboratuvarımıza gelen bir cihaz veya sahada test ettiğimiz bir sistem sadece metal ve elektronikten ibaret değildir. O cihaz, bir ilacın dozajını veya bir uçak parçasının dayanımını belirler.
+  > *"Laboratuvarımıza gelen bir cihaz veya sahada test ettiğimiz bir sistem sadece metal ve elektronikten ibaret değildir. O cihaz, müşterimizin üretim kalitesine ve kararlarına doğrudan etki eder.
   > Bu yüzden müşterilerimize 'Çözüm Ortağı', cihazlarına ise 'Hassas Emanet' gözüyle bakarız. Onların sorularına doğru, anlaşılır ve bilimsel yanıtlar vermek temel ilkemizdir."*
 
 ---
@@ -332,6 +400,10 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 
  Müşteri: "Yerinde kalibrasyon yapıyor musunuz?"
  Yanıt:   "Bazı cihaz ve sistemler için yerinde hizmet planlanabilir. Cihaz türü, ölçüm aralığı, lokasyon, erişim ve saha koşullarını alıp teknik ekibimizle yapılabilirliği teyit edelim."
+```
+
+* **Seslendirme:**
+  > *"Müşteri sorularında altın kural şudur: bildiğini açık söyle, bilmediğini tahmin etme. Teslim süresi, uygunluk yorumu ve yerinde hizmet gibi konularda önce kontrollü kaynağı ve teknik sorumluyu devreye al, sonra müşteriye net bir geri dönüş zamanı ver."*
 
 ### Ekran 4.3: Zor Görüşmelerde İletişim
 * **Ekran Türü:** Diyalog simülasyonu
@@ -345,6 +417,9 @@ Bir ölçüm sonucunu teknik şartnameyle karşılaştırırken aşağıdakileri
 **Müşteri:** “Cihazı bugün ayarlayıp kalibre edilmiş gibi gönderebilir misiniz?”
 * **Uygun yanıt:** “Kalibrasyon ve ayarlama farklı işlemlerdir. Talebinizi teknik ekibe ileteyim; onayınız, uygulanabilirlik ve kayıt gereklilikleri netleşmeden cihaz üzerinde değişiklik yapmayız.”
 
+* **Seslendirme:**
+  > *"Zor görüşmelerde sakin, net ve tutarlı kal. Sonucu ticari talebe göre değiştirmeyiz. Başka müşterilerin bilgisini paylaşmayız. Kalibrasyonla ayarlamayı karıştırmayız. Bunu söylerken de çözüm sun: teknik ekiple birlikte veriyi gözden geçirmeyi ve resmi süreci başlatmayı teklif et."*
+
 ### Ekran 4.4: Müşteri İhtiyacını Doğru Anlama
 * **Ekran Türü:** Soru kartı sıralama
 
@@ -357,9 +432,21 @@ Teklif veya yönlendirme öncesinde şu bilgileri topla:
 * Akreditasyon şartı varsa talep edilen ölçümün ve lokasyonun kapsamla eşleşmesi.
 
 **Sınır:** Bilinmeyen teknik soruda tahmin yürütmek yerine soruyu kaydet, sorumluya aktar ve müşteriye geri dönüş zamanı ver.
-```
+
+* **Seslendirme:**
+  > *"İyi bir teklif, iyi sorularla başlar. Cihazı, ölçüm aralığını, toleransı, lokasyonu ve akreditasyon beklentisini baştan netleştirirsen hem müşteri hem laboratuvar zaman kazanır."*
+
+### Ekran 4.5: Modül 4 Pekiştirme Quizi
+* **Ekran Türü:** Çoktan seçmeli
+* **Soru:** Müşteri başka bir firmanın cihazına ait sonucu soruyor. Doğru yanıt hangisidir?
+  * A) Kısaca söyleyip konuyu kapatırım.
+  * **B) Diğer müşterilere ait bilgi paylaşamayacağımı, yalnızca yetkisi doğrulanan kendi cihaz kayıtlarının incelenebileceğini söylerim.** ✔
+  * C) Sonucu e-postayla gönderirim ama kimseye söylemem.
+* **Geri bildirim:** Doğru yanıtta "+100 Ece-Coin"; yanlış yanıtta Ekran 4.3 öğrenme kartına yönlendirme ve tekrar deneme.
 
 ---
+
+<a id="modul-5"></a>
 
 ## MODÜL 5: ÇALIŞAN REHBERİ, İSG VE SAHA GÜVENLİĞİ
 
@@ -378,6 +465,10 @@ Teklif veya yönlendirme öncesinde şu bilgileri topla:
 +-------------------------------------------------------------------+
 ```
 
+* **Seslendirme:**
+  > *"İş Kanunu'na göre yıllık ücretli izin süresi, bir ila beş yıl arasında, beş yıl dahil, on dört gün; beş yıldan fazla, on beş yıldan az olanlarda yirmi gün; on beş yıl ve üzerinde yirmi altı gündür. Bakiyeni ve özel durumları İnsan Kaynakları'ndan teyit et."*
+* **Etkileşim:** Üç kıdem senaryosu, doğru izin süresiyle eşleştirilir.
+* **Not:** On sekiz yaşından küçük ve elli yaşından büyük çalışanlar için asgari süre yirmi gündür; kişisel durum için İnsan Kaynakları esas alınır.
 * **Önemli:** Kanuni yıllık ücretli izin süreleri iş günü değil gündür; hafta tatili ve ulusal bayram/genel tatil günlerinin hesaba katılması ilgili mevzuata tabidir. Bu özet, kişisel durum veya güncel mevzuat için hukuki görüş değildir. İzin bakiyesi, kıdem hesabı ve şirket uygulaması için İnsan Kaynakları ve güncel mevzuat esas alınmalıdır.
 
 ---
@@ -410,7 +501,14 @@ Teklif veya yönlendirme öncesinde şu bilgileri topla:
 
 **Durdur ve danış:** Uygun olmayan ortam koşulu, koruyucu eksikliği, hasarlı ekipman, belirsiz talimat veya yetkinlik dışı iş varsa ölçüme başlamadan yetkili kişiye haber ver.
 
+* **Seslendirme:**
+  > *"İşe başlamadan önce altı adımı uygula: kapsamı ve saha kurallarını teyit et, riskleri ve acil durum bilgisini kontrol et, ekipmanı gözle denetle, basınç ve elektrik düzeneğini güvenle kur, uygun koruyucu donanımı giy, beklenmeyen bir durumda işi durdur ve bildir. Şüphen varsa dur ve danış. Hiçbir ölçüm, bir kazaya değmez."*
+* **Etkileşim:** Üç saha senaryosunda katılımcı "başla" veya "durdur ve danış" kararı verir. Hasarlı kablo, eksik KKD ve belirsiz talimat durumlarında doğru karar "durdur"dur.
+* **Kritik senaryo:** Doğru karar verilmeden modül tamamlanmış sayılmaz.
+
 ---
+
+<a id="modul-6"></a>
 
 ## MODÜL 6: UYGULAMALI FİNAL GÖREVİ
 
@@ -430,6 +528,15 @@ Teklif veya yönlendirme öncesinde şu bilgileri topla:
 |  [ GÖREVİ TAMAMLA ]                                               |
 +-------------------------------------------------------------------+
 ```
+
+* **Oyun mekaniği:** Süre 3 dakikadır. Denetçi her kontrol noktasında bir soru sorar; katılımcı üç kanıt kartından doğru olanı seçer.
+  * **Kontrol 1 (çevre koşulları):** Doğru kanıt, ölçüm anında eşzamanlı alınmış ve prosedürdeki sınırlarla karşılaştırılmış koşul kaydıdır. Sonradan hatırlanarak yazılmış not yanlıştır.
+  * **Kontrol 2 (izlenebilirlik):** Doğru kanıt, geçerli kalibrasyon sertifikası ve kesintisiz referans zinciridir. Süresi geçmiş veya zinciri belirsiz referans yanlıştır.
+  * **Kontrol 3 (sonuç ve karar kuralı):** Doğru kanıt, belirsizliği ve kararın dayandığı kuralı içeren rapordur.
+* **Puanlama:** Her kontrol 150 Ece-Coin; süre bitmeden üçünü de tamamlayana 50 Ece-Coin ek puan. Toplam 500 Ece-Coin.
+* **Süre dolarsa:** Eksik kalan kontrol, doğru yanıt gösterilerek tekrar edilir; coin yarıya iner.
+* **Seslendirme:**
+  > *"TÜRKAK denetçisi kapıda! Panik yok. Her kontrol noktasında iddiayı kanıtla destekle: koşul kayıtlarını, referansların izlenebilirliğini, sonuç, belirsizlik ve karar kuralını göster. Denetim, hazırlıklı ve dürüst bir laboratuvar için bir fırsattır."*
 
 ---
 
@@ -466,8 +573,18 @@ Katılımcı şu adımları seçmelidir:
 4. Sonucu ve varsa karar kuralını açık, tarafsız bir dille müşteriye ilet; alternatif teknik adımları yetkili sorumlu üzerinden değerlendir.
 
 * **Başarı ölçütü:** Sonucu baskıya göre değiştirmemek, belirsizliği dikkate almak, kayıtları korumak ve uygun eskalasyon yapmak.
+* **Puanlama:** Dört adımın her biri 100 Ece-Coin; toplam 400. Veriyi veya sonucu değiştirmeyi seçen katılımcı vakayı yeniden oynar ve coin kazanamaz.
+* **Seslendirme:**
+  > *"Sevkiyat yaklaşıyor, müşteri sabırsız, ama sonuç tolerans dışında görünüyor. Doğru yol bellidir: ham veriyi ve kimliği doğrula, belirsizliği ve karar kuralını birlikte değerlendir, teknik gözden geçirmeyi başlat ve sonucu tarafsız bir dille ilet. Veriyi asla değiştirme."*
+
+---
+
+<a id="modul-7"></a>
 
 ## MODÜL 7: İŞBAŞI ÖĞRENME VE YETKİNLİK
+* **Seslendirme:**
+  > *"Bu oryantasyonu tamamlamak, tek başına bir ölçüm yönteminde bağımsız çalışma yetkisi vermez. Yetkinlik beş aşamada kazanılır: bilgi edinme, gözetimli uygulama, yetkinlik değerlendirmesi, yetkilendirme ve süreklilik. Her aşamada eğitici ve yönetici sana destek olur."*
+* **Etkileşim (7.2):** Yedi kontrol listesi maddesi, "ölçüm öncesi / ölçüm sırası / ölçüm sonrası" sütunlarına sürüklenir. Toplam 200 Ece-Coin.
 
 ### 7.1 Oryantasyondan Yetkilendirmeye
 Bu e-öğrenmeyi tamamlamak, tek başına bir ölçüm yönteminde bağımsız çalışma yetkisi vermez. Yetkinlik; eğitim, gözetimli uygulama, gözlem/ölçme, kayıt ve yetkilendirme adımlarıyla ilgili görev için ayrı ayrı doğrulanır.
@@ -489,7 +606,12 @@ Bu e-öğrenmeyi tamamlamak, tek başına bir ölçüm yönteminde bağımsız �
 * Sonuç ve kapsamla ilgili soruları yetki sınırları içinde yanıtlama.
 * Uygunsuzluk veya beklenmedik durumda işi durdurup bildirme.
 
+<a id="modul-8"></a>
+
 ## MODÜL 8: TERİMLER, KAYNAKLAR VE BİLGİ GÜNCELLEME
+* **Seslendirme:**
+  > *"Son durak: terimler ve kaynaklar. Metroloji, kalibrasyon, ayarlama, doğrulama, validasyon, belirsizlik, izlenebilirlik, akreditasyon kapsamı ve karar kuralı; bunlar ortak dilimiz. Bilgiden emin olmadığında güncel kontrollü dokümana, TÜRKAK kapsam ekine veya doküman sahibine başvur."*
+* **Etkileşim:** 8.1'de dokuz terim tanımlarıyla eşleştirilir (100 Ece-Coin); 8.2'de "bu bilgiyi hangi kaynaktan doğrularsın?" kartları eşleştirilir (100 Ece-Coin).
 
 ### 8.1 Kısa Terimler Sözlüğü
 * **Metroloji:** Ölçüm ve uygulamalarını kapsayan ölçüm bilimi.
@@ -511,10 +633,13 @@ Bu e-öğrenmeyi tamamlamak, tek başına bir ölçüm yönteminde bağımsız �
 
 ---
 
+<a id="lms"></a>
+
 ## LMS YÖNETİMİ, SCORM VE TEKNİK UYARLAMA
 
 ### 9.1 Teknik Yayın Standartları
 * **Paket formatı:** Kurumun LMS'si ve raporlama ihtiyacına göre SCORM 1.2, SCORM 2004 veya xAPI seçilir; tek bir seçenek tüm LMS'lerle uyumlu varsayılmaz.
+* **Uygulanan çözüm:** Program (`program/`) SCORM 1.2 olarak paketlenmiştir (durum, 0–100 puan, konum ve `suspend_data`); LMS yoksa şirket içi web sitesi ve `yonetici.html` raporuyla kullanılır. Gerçek LMS'de pilot doğrulama gereklidir.
 * **Görüntüleme:** Duyarlı HTML5 içerik; masaüstü, tablet ve telefon ekranlarında test edilir.
 * **Uyumluluk:** Kullanılacak yazarlama aracı ve LMS sürümü, gerçek test ortamında paket yükleme ve kayıt senaryolarıyla doğrulanır.
 * **Ses:** Seslendirme için kullanılan format ve kalite, yazarlama aracının/LMS'nin gereksinimine göre belirlenir; tüm seslere senkronize metin dökümü veya altyazı sağlanır.
