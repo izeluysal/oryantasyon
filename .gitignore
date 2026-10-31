@@ -10,4 +10,6 @@ venv/
 .venv/
 .claude/
 dist/
-video/out/
+oryantasyonfiles/
+oryantasyongorseller/
+test/legacy_video/out/

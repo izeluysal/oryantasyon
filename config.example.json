@@ -1,0 +1,17 @@
+{
+  "postgres": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "oryantasyon_user",
+    "password": "secret",
+    "database": "oryantasyon"
+  },
+  "container": {
+    "name": "oryantasyon",
+    "publish_port": 5123,
+    "publish_address": "http://localhost:5123"
+  },
+  "flask": {
+    "secret_key": "your-secret-key"
+  }
+}

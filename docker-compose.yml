@@ -1,0 +1,26 @@
+services:
+  oryantasyon:
+    build: .
+    container_name: oryantasyon
+    restart: always
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=Europe/Istanbul
+    volumes:
+      - ./config.json:/app/config.json
+      - oryantasyonfiles:/app/oryantasyonfiles
+      - oryantasyongorseller:/app/oryantasyongorseller
+    ports:
+      - "5123:5123"
+    networks:
+      - nginx
+    expose:
+      - "5123"
+
+networks:
+  nginx:
+    external: true
+
+volumes:
+  oryantasyonfiles:
+  oryantasyongorseller:

@@ -12,7 +12,7 @@ import sys
 import edge_tts
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(ROOT, "..", "video"))
+sys.path.insert(0, os.path.join(ROOT, "..", "legacy_video"))
 from scenes import SCENES  # noqa: E402
 
 AUDIO = os.path.join(ROOT, "audio")

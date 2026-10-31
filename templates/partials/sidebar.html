@@ -1,0 +1,31 @@
+<ul class="nav flex-column sidebar-menu">
+  {% for item in menu_items %}
+  {% if item.children %}
+  {% set group_open = item.children | selectattr('endpoint', 'equalto', request.endpoint) | list | length > 0 %}
+  <li class="nav-item has-submenu">
+    <a class="nav-link{% if group_open %} active{% endif %}" href="#menu-{{ item.key }}" data-bs-toggle="collapse"
+       aria-expanded="{{ 'true' if group_open else 'false' }}">
+      <i class="bi {{ item.icon }}" aria-hidden="true"></i><span class="label">{{ t(item.label) }}</span>
+      <i class="bi bi-chevron-down chevron" aria-hidden="true"></i>
+    </a>
+    <ul class="collapse nav-submenu{% if group_open %} show{% endif %}" id="menu-{{ item.key }}">
+      {% for child in item.children %}
+      <li>
+        <a class="nav-link{% if request.endpoint == child.endpoint %} active{% endif %}" href="{{ url_for(child.endpoint) }}">
+          <i class="bi {{ child.icon }}" aria-hidden="true"></i><span class="label">{{ t(child.label) }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% else %}
+  <li class="nav-item">
+    <a class="nav-link{% if request.endpoint == item.endpoint %} active{% endif %}" href="{{ url_for(item.endpoint) }}"
+       title="{{ t(item.label) }}">
+      <i class="bi {{ item.icon }}" aria-hidden="true"></i><span class="label">{{ t(item.label) }}</span>
+    </a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+<div class="sidebar-version" title="{{ t('nav.version') }}">v{{ app_version }}</div>

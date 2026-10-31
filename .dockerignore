@@ -1,0 +1,14 @@
+config.json
+.env
+*.key
+*.pem
+.git
+.venv
+venv
+__pycache__
+*.pyc
+md
+test
+dist
+oryantasyonfiles
+oryantasyongorseller

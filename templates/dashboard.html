@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}{{ t('dashboard.title') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('dashboard.title') }}</h1>
+</div>
+<div class="row g-3">
+  {% if counters.businesses is defined %}
+  <div class="col-12 col-md-6 col-xl-3">
+    <div class="stat-card">
+      <i class="bi bi-buildings stat-icon" aria-hidden="true"></i>
+      <div>
+        <div class="stat-value">{{ counters.businesses | sayi }}</div>
+        <div class="stat-label">{{ t('dashboard.businesses') }}</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="col-12 col-md-6 col-xl-3">
+    <div class="stat-card">
+      <i class="bi bi-people stat-icon" aria-hidden="true"></i>
+      <div>
+        <div class="stat-value">{{ counters.users | sayi }}</div>
+        <div class="stat-label">{{ t('dashboard.users') }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

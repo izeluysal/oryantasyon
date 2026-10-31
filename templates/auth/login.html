@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="{{ aktif_dil }}" data-yerel-ayar="{{ yerel_ayar }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t('auth.login.title') }} - {{ t('app.name') }}</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <div class="login-brand">
+      <i class="bi bi-patch-check login-logo" aria-hidden="true"></i>
+      <h1 class="login-title">{{ t('app.name') }}</h1>
+      <p class="text-muted mb-0">{{ t('auth.login.subtitle') }}</p>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ 'danger' if category == 'error' else category }} d-flex align-items-center" role="alert">
+      <i class="bi {{ {'success': 'bi-check-circle', 'danger': 'bi-x-circle', 'warning': 'bi-exclamation-triangle'}.get(category, 'bi-info-circle') }} me-2" aria-hidden="true"></i>
+      <span>{{ message }}</span>
+    </div>
+    {% endfor %}
+    {% endwith %}
+    {% if error %}
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+      <i class="bi bi-x-circle me-2" aria-hidden="true"></i><span>{{ error }}</span>
+    </div>
+    {% endif %}
+    <form method="post" action="{{ url_for('auth.login', next=request.args.get('next')) }}" novalidate>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="mb-3">
+        <label for="email" class="form-label">{{ t('auth.login.email') }}</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ email }}" maxlength="255"
+               autocomplete="username" required autofocus>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">{{ t('auth.login.password') }}</label>
+        <input type="password" class="form-control" id="password" name="password" maxlength="255"
+               autocomplete="current-password" required>
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="remember" name="remember" value="1">
+        <label for="remember" class="form-check-label">{{ t('auth.login.remember') }}</label>
+      </div>
+      <button type="submit" class="btn btn-primary w-100 d-inline-flex justify-content-center align-items-center">
+        <i class="bi bi-box-arrow-in-right me-2" aria-hidden="true"></i>{{ t('auth.login.submit') }}
+      </button>
+    </form>
+    {% if diller | length > 1 %}
+    <div class="login-languages">
+      {% for code, info in diller.items() %}
+      <a href="{{ url_for('language.set_language', code=code, next=request.path) }}" lang="{{ code }}"
+         class="{{ 'fw-bold' if code == aktif_dil }}">{{ info.ad }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </main>
+</body>
+</html>
