@@ -111,6 +111,7 @@
   "menu.deleted_report": "Silinme Raporu",
   "menu.settings": "Ayarlar",
   "menu.training": "Eğitimim",
+  "menu.training_preview": "Eğitim İçeriği",
   "menu.training_report": "Eğitim Raporu",
   "nav.back_to_admin": "Admin panele dön",
   "nav.businesses": "İşletmeler",
@@ -188,6 +189,12 @@
   "training.locked": "Bu ekran, önceki ekranlar tamamlanınca açılır.",
   "training.next": "Devam",
   "training.open": "Aç",
+  "training.preview.questions": {
+    "one": "{count} soru",
+    "other": "{count} soru"
+  },
+  "training.preview.screen.usage_info": "Çalışanların göreceği ekranın salt okunur önizlemesidir: doğru yanıtlar işaretlidir ve burada hiçbir puan veya ilerleme kaydedilmez.",
+  "training.preview.usage_info_html": "Oryantasyon eğitiminin tüm ekranlarını, seslendirmelerini ve sorularını inceleyebilirsiniz (toplam {coins} Ece-Coin). Bir ekranın <strong>Ayrıntı</strong> düğmesiyle çalışanların göreceği içeriği ve doğru yanıtları görürsünüz. Eğitimi almak için işletme kullanıcısıyla girin.",
   "training.previous": "Geri",
   "training.questions.title": "Pekiştirme",
   "training.report.counter.all": "Tüm çalışanlar",

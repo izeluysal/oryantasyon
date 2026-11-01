@@ -198,6 +198,27 @@ def test_report_counts_completed_in_progress_and_not_started():
         assert filtered["total"] == 1 and "__test__devam" in filtered["html"]
 
 
+def test_content_preview_is_for_managers_and_writes_nothing():
+    """Eğitim içeriği önizlemesi yönetici rollerine açıktır, çalışana kapalıdır ve hiçbir kayıt yazmaz."""
+    with environment() as app:
+        business_id = make_business("onizleme")
+        _, platform_email = make_user(ROLE_ADMIN, name="platform")
+        _, manager_email = make_user(ROLE_BUSINESS_ADMIN, business_id, name="mudur")
+        _, learner_email = make_user(ROLE_BUSINESS_USER, business_id, name="calisan")
+        first_id = _screens()[0]["training_screen_id"]
+        for email in (platform_email, manager_email):
+            client = new_client(app)
+            client.login(email)
+            listing = client.get("/egitim-icerigi")
+            assert listing.status_code == 200 and "Hassas Metroloji Yolculuğu" in listing.get_data(as_text=True)
+            page = client.get("/egitim-icerigi/{}".format(first_id))
+            assert page.status_code == 200 and "Evet, yolculuğa başlıyorum!" in page.get_data(as_text=True)
+        learner = new_client(app)
+        learner.login(learner_email)
+        assert learner.get("/egitim-icerigi").status_code == 403
+        assert query_one("SELECT count(*) AS n FROM training_progress WHERE business_id = %s", (business_id,))["n"] == 0
+
+
 if __name__ == "__main__":
     for name, function in list(globals().items()):
         if name.startswith("test_"):

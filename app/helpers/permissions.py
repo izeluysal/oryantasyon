@@ -22,6 +22,7 @@ ACTIONS = {
     "deleted.view": {"roles": READERS, "scoped": True},
     "deleted.restore": {"roles": WRITERS, "scoped": True},
     "training.take": {"roles": (ROLE_BUSINESS_ADMIN, ROLE_BUSINESS_USER), "scoped": True, "learner_only": True},
+    "training.preview": {"roles": READERS, "scoped": False},
     "training.report": {"roles": READERS, "scoped": True},
 }
 

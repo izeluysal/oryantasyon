@@ -140,6 +140,34 @@ def certificate():
                            total_coins=Training.total_coins(), business=Business.get_by_id(g.business_id))
 
 
+@bp.route("/egitim-icerigi")
+@login_required
+def preview_index():
+    """Eğitim içeriği (salt okunur): yöneticiler ekranları, soruları ve doğru yanıtları inceler; puan yazılmaz."""
+    if not can(current_user, "training.preview"):
+        abort(403)
+    modules = {}
+    for screen in Training.screens():
+        modules.setdefault(screen["module_name"], []).append(screen)
+    return render_template("training/preview_index.html", modules=modules, total_coins=Training.total_coins())
+
+
+@bp.route("/egitim-icerigi/<int:training_screen_id>")
+@login_required
+def preview_screen(training_screen_id):
+    """Tek ekranın içeriği: anlatım, seslendirme ve doğru yanıtı işaretli sorular (kayıt tutulmaz)."""
+    if not can(current_user, "training.preview"):
+        abort(403)
+    screen_row = _screen_or_404(training_screen_id)
+    screens = Training.screens()
+    position = next(i for i, s in enumerate(screens) if s["training_screen_id"] == training_screen_id)
+    return render_template(
+        "training/preview_screen.html", screen=screen_row, questions=Training.questions(training_screen_id),
+        previous_id=screens[position - 1]["training_screen_id"] if position > 0 else None,
+        next_id=screens[position + 1]["training_screen_id"] if position + 1 < len(screens) else None,
+        position=position + 1, position_total=len(screens))
+
+
 def _report_filters():
     """Rapor listesi ve Excel ucunun ortak filtre okuması; geçersiz değer yok sayılır."""
     status = request.args.get("status")

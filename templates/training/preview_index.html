@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{% block title %}{{ t('menu.training_preview') }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">{{ t('menu.training_preview') }}</h1>
+</div>
+{% call kullanim_bilgisi() %}{{ t('training.preview.usage_info_html', coins=total_coins) | safe }}{% endcall %}
+{% for module_name, items in modules.items() %}
+<div class="card mb-3">
+  <div class="card-header fw-semibold">{{ module_name }}</div>
+  <ul class="list-group list-group-flush">
+    {% for screen in items %}
+    <li class="list-group-item d-flex align-items-center justify-content-between">
+      <div>
+        <div>{{ screen.title }}</div>
+        <div class="text-muted small">{{ screen.screen_code }} · {{ t('training.preview.questions', count=screen.question_count) }}{% if screen.coins %} · {{ screen.coins | sayi }} Ece-Coin{% endif %}</div>
+      </div>
+      <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('training.preview_screen', training_screen_id=screen.training_screen_id) }}"><i class="bi bi-eye me-1" aria-hidden="true"></i>{{ t('common.detail') }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}
+{% endblock %}

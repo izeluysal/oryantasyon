@@ -18,6 +18,13 @@ MENU_ITEMS = [
         "roles": (ROLE_BUSINESS_ADMIN, ROLE_BUSINESS_USER),
     },
     {
+        "key": "training_preview",
+        "label": "menu.training_preview",
+        "icon": "bi-journal-richtext",
+        "endpoint": "training.preview_index",
+        "roles": (ROLE_ADMIN, ROLE_BUSINESS_ADMIN, ROLE_AUDITOR),
+    },
+    {
         "key": "training_report",
         "label": "menu.training_report",
         "icon": "bi-bar-chart",

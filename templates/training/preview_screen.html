@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% from 'macros/ui.html' import kullanim_bilgisi %}
+{% block title %}{{ screen.title }} - {{ t('app.name') }}{% endblock %}
+{% block content %}
+<div class="text-muted small mb-1">{{ screen.module_name }} · {{ t('training.screen_label', code=screen.screen_code) }} · {{ position }} / {{ position_total }}</div>
+<div class="page-header">
+  <h1 class="page-title">{{ screen.title }}</h1>
+  <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('training.preview_index') }}"><i class="bi bi-list-ul me-1" aria-hidden="true"></i>{{ t('training.back_to_list') }}</a>
+</div>
+{% call kullanim_bilgisi() %}{{ t('training.preview.screen.usage_info') }}{% endcall %}
+<div class="card mb-3">
+  <div class="card-body">
+    <ul class="training-bullets">{% for bullet in screen.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>
+    {% if screen.table_data %}
+    <div class="table-responsive"><table class="table table-sm">
+      {% for row in screen.table_data %}{% set tag = 'th' if loop.first else 'td' %}
+      <tr>{% for cell in row %}<{{ tag }}>{{ cell }}</{{ tag }}>{% endfor %}</tr>{% endfor %}
+    </table></div>
+    {% endif %}
+    {% if screen.note %}<div class="note-box"><i class="bi bi-info-circle me-2" aria-hidden="true"></i>{{ screen.note }}</div>{% endif %}
+    <div class="d-flex align-items-center gap-3 mt-3">
+      <span class="avatar" aria-hidden="true">M</span>
+      <audio controls preload="none" class="flex-grow-1" src="{{ url_for('static', filename='audio/' ~ screen.audio_file) }}" aria-label="{{ t('training.audio.aria') }}"></audio>
+    </div>
+    <details class="mt-2 text-muted"><summary>{{ t('training.transcript') }}</summary><p class="mt-2 mb-0">{{ screen.voice_text }}</p></details>
+  </div>
+</div>
+{% for question in questions %}
+<div class="q">
+  <h3 class="fs-6 fw-semibold">{{ question.question_text }} <span class="text-muted small">· {{ question.coins | sayi }} Ece-Coin</span></h3>
+  <div class="opts">
+    {% for option in question.options %}
+    <div class="opt{% if loop.index0 == question.correct_index %} ok{% endif %}">{% if loop.index0 == question.correct_index %}<i class="bi bi-check-circle me-2" aria-hidden="true"></i>{% endif %}{{ option }}</div>
+    {% endfor %}
+  </div>
+  <div class="fb">{{ question.explanation }}</div>
+</div>
+{% endfor %}
+<div class="d-flex justify-content-between mt-4">
+  {% if previous_id %}<a class="btn btn-outline-secondary" href="{{ url_for('training.preview_screen', training_screen_id=previous_id) }}"><i class="bi bi-arrow-left me-1" aria-hidden="true"></i>{{ t('training.previous') }}</a>{% else %}<span></span>{% endif %}
+  {% if next_id %}<a class="btn btn-primary" href="{{ url_for('training.preview_screen', training_screen_id=next_id) }}">{{ t('training.next') }}<i class="bi bi-arrow-right ms-1" aria-hidden="true"></i></a>{% endif %}
+</div>
+{% endblock %}
