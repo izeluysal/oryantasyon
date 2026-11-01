@@ -58,6 +58,15 @@
   document.addEventListener('DOMContentLoaded', function () { initTooltips(document); });
   document.addEventListener('shown.bs.modal', function (event) { initTooltips(event.target); });
 
+  // Video: tarayıcı sesi kısık/sessiz bıraktıysa oynatmada ses açılır (kullanıcı kontrolü yine oynatıcıdadır).
+  document.addEventListener('play', function (event) {
+    var media = event.target;
+    if (media.tagName === 'VIDEO' && media.classList.contains('training-video')) {
+      if (media.muted) { media.muted = false; }
+      if (media.volume === 0) { media.volume = 1; }
+    }
+  }, true);
+
   // Toast: sağ altta, 20 sn sonra kapanır; kapsayıcı aria-live bölgesidir.
   window.toast = function (message, ok) {
     var container = document.getElementById('toastContainer');

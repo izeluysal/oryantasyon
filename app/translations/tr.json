@@ -230,6 +230,7 @@
   "training.video.aria": "Eğitim videosu: slayt ve seslendirme",
   "training.video.full_hint": "Tüm eğitimin sesli slayt anlatımı (yaklaşık 10 dakika). Ekranlar sırayla ilerlerken her ekranın kendi videosu da vardır.",
   "training.video.full_title": "Tam eğitim videosu",
+  "training.video.sound_hint": "Sesi duymuyorsanız bilgisayarın ve tarayıcı sekmesinin sesini ve videodaki ses düğmesini kontrol edin. Anlatımı aşağıdaki Seslendirme metni bölümünden de okuyabilirsiniz.",
   "user.counter.all": "Tüm kullanıcılar",
   "user.counter.aria": "Kullanıcıları duruma göre süz",
   "user.created": "Kullanıcı oluşturuldu.",

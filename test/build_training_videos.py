@@ -197,8 +197,10 @@ def build_scene(scene, index, total, codes, base):
     output = os.path.join(VIDEO_DIR, "s{:02d}.mp4".format(index))
     subprocess.run([
         FFMPEG, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", list_path, "-i", audio,
-        "-vf", "fps=25,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "30", "-tune", "stillimage",
-        "-c:a", "aac", "-b:a", "64k", "-ac", "1", "-af", "apad=pad_dur={}".format(TAIL),
+        "-vf", "fps=25,format=yuv420p", "-c:v", "libx264", "-profile:v", "high", "-level", "4.0", "-preset", "veryfast",
+        "-crf", "30", "-tune", "stillimage",
+        "-c:a", "aac", "-profile:a", "aac_low", "-b:a", "96k", "-ar", "44100", "-ac", "2",
+        "-af", "apad=pad_dur={}".format(TAIL),
         "-t", "{:.3f}".format(duration + TAIL),
         "-movflags", "+faststart", output], check=True)
     # Poster: tüm maddelerin göründüğü, altyazısız kare.

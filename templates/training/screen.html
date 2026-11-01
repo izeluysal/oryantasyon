@@ -16,6 +16,7 @@
            aria-label="{{ t('training.video.aria') }}">
       <source src="{{ url_for('static', filename='video/' ~ screen.video_file) }}" type="video/mp4">
     </video>
+    <p class="text-muted small mb-3"><i class="bi bi-volume-up me-1" aria-hidden="true"></i>{{ t('training.video.sound_hint') }}</p>
     <ul class="training-bullets">
       {% for bullet in screen.bullets %}<li>{{ bullet }}</li>{% endfor %}
     </ul>
