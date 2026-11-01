@@ -99,7 +99,8 @@ def render(scene, index, total, visible, sentence, codes, base):
     draw.text((W - 60, 30), "ECE KALİBRASYON · ORYANTASYON", font=text_font(20, True), fill=MUTED, anchor="ra")
 
     # Sol panel: büyük ikon ve Metroli
-    draw.rounded_rectangle([60, 130, 330, 400], radius=36, fill=(255, 255, 255, 28), outline=(255, 255, 255, 70), width=2)
+    draw.rounded_rectangle([60, 130, 330, 400], radius=36, fill=(255, 255, 255, 28), outline=(255, 255, 255, 70),
+                           width=2)
     draw_icon(draw, codes, ICONS[index % len(ICONS)], (195, 265), 150, GOLD)
     draw.ellipse([60, 425, 130, 495], fill=TEAL)
     draw.text((95, 460), "M", font=text_font(40, True), fill=TOP, anchor="mm")
@@ -197,7 +198,8 @@ def build_scene(scene, index, total, codes, base):
     subprocess.run([
         FFMPEG, "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", list_path, "-i", audio,
         "-vf", "fps=25,format=yuv420p", "-c:v", "libx264", "-preset", "veryfast", "-crf", "30", "-tune", "stillimage",
-        "-c:a", "aac", "-b:a", "64k", "-ac", "1", "-af", "apad=pad_dur={}".format(TAIL), "-t", "{:.3f}".format(duration + TAIL),
+        "-c:a", "aac", "-b:a", "64k", "-ac", "1", "-af", "apad=pad_dur={}".format(TAIL),
+        "-t", "{:.3f}".format(duration + TAIL),
         "-movflags", "+faststart", output], check=True)
     # Poster: tüm maddelerin göründüğü, altyazısız kare.
     render(scene, index, total, len(scene[2][:4]), "", codes, base).save(
