@@ -11,6 +11,11 @@
 
 <div class="card mb-3">
   <div class="card-body">
+    <video controls preload="metadata" class="training-video mb-3" playsinline
+           poster="{{ url_for('static', filename='video/' ~ screen.video_file[:-4] ~ '.jpg') }}"
+           aria-label="{{ t('training.video.aria') }}">
+      <source src="{{ url_for('static', filename='video/' ~ screen.video_file) }}" type="video/mp4">
+    </video>
     <ul class="training-bullets">
       {% for bullet in screen.bullets %}<li>{{ bullet }}</li>{% endfor %}
     </ul>
@@ -23,10 +28,6 @@
     </table></div>
     {% endif %}
     {% if screen.note %}<div class="note-box"><i class="bi bi-info-circle me-2" aria-hidden="true"></i>{{ screen.note }}</div>{% endif %}
-    <div class="d-flex align-items-center gap-3 mt-3">
-      <span class="avatar" aria-hidden="true">M</span>
-      <audio controls preload="none" class="flex-grow-1" src="{{ url_for('static', filename='audio/' ~ screen.audio_file) }}" aria-label="{{ t('training.audio.aria') }}"></audio>
-    </div>
     <details class="mt-2 text-muted">
       <summary>{{ t('training.transcript') }}</summary>
       <p class="mt-2 mb-0">{{ screen.voice_text }}</p>

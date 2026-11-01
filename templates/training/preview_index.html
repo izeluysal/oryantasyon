@@ -6,6 +6,16 @@
   <h1 class="page-title">{{ t('menu.training_preview') }}</h1>
 </div>
 {% call kullanim_bilgisi() %}{{ t('training.preview.usage_info_html', coins=total_coins) | safe }}{% endcall %}
+<div class="card mb-3">
+  <div class="card-header fw-semibold"><i class="bi bi-film me-2" aria-hidden="true"></i>{{ t('training.video.full_title') }}</div>
+  <div class="card-body">
+    <p class="text-muted small mb-2">{{ t('training.video.full_hint') }}</p>
+    <video controls preload="none" class="training-video" playsinline
+           poster="{{ url_for('static', filename='video/s00.jpg') }}" aria-label="{{ t('training.video.full_title') }}">
+      <source src="{{ url_for('static', filename='video/oryantasyon.mp4') }}" type="video/mp4">
+    </video>
+  </div>
+</div>
 {% for module_name, items in modules.items() %}
 <div class="card mb-3">
   <div class="card-header fw-semibold">{{ module_name }}</div>

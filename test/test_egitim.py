@@ -219,6 +219,24 @@ def test_content_preview_is_for_managers_and_writes_nothing():
         assert query_one("SELECT count(*) AS n FROM training_progress WHERE business_id = %s", (business_id,))["n"] == 0
 
 
+def test_every_screen_has_a_playable_video_and_poster():
+    """Her ekranın videosu ve posteri sunulur; Range isteği (ileri sarma) 206 döner; sayfada <video> vardır."""
+    with environment() as app:
+        client, _, _ = _learner(app)
+        screens = query_all("SELECT training_screen_id, video_file FROM training_screens ORDER BY sort_order")
+        assert len(screens) == 24 and all(row["video_file"] for row in screens)
+        for row in screens:
+            video = client.get("/static/video/" + row["video_file"])
+            assert video.status_code == 200 and video.mimetype == "video/mp4" and len(video.data) > 50000, row
+            assert client.get("/static/video/" + row["video_file"][:-4] + ".jpg").status_code == 200
+        ranged = client.get("/static/video/" + screens[0]["video_file"], headers={"Range": "bytes=0-99"})
+        assert ranged.status_code == 206
+        first = client.get("/egitim/ekran/{}".format(screens[0]["training_screen_id"])).get_data(as_text=True)
+        assert "<video" in first and screens[0]["video_file"] in first
+        assert "oryantasyon.mp4" in client.get("/egitim").get_data(as_text=True)
+        assert client.get("/static/video/oryantasyon.mp4").status_code == 200
+
+
 if __name__ == "__main__":
     for name, function in list(globals().items()):
         if name.startswith("test_"):

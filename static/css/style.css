@@ -356,3 +356,6 @@ thead tr:has(+ .tablo-filtre-satiri) > th { border-bottom-width: 0; }
   body.app-shell { padding-top: 0; background: var(--surface-card); }
   .app-content { margin-left: 0 !important; }
 }
+
+/* Eğitim videosu: slayt oranını korur, kart genişliğine sığar. */
+.training-video { width: 100%; max-height: 70vh; aspect-ratio: 16 / 9; background: var(--surface-page); border-radius: 10px; }
