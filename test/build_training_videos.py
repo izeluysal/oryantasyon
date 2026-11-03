@@ -200,7 +200,7 @@ def build_scene(scene, index, total, codes, base):
         "-vf", "fps=25,format=yuv420p", "-c:v", "libx264", "-profile:v", "high", "-level", "4.0", "-preset", "veryfast",
         "-crf", "30", "-tune", "stillimage",
         "-c:a", "aac", "-profile:a", "aac_low", "-b:a", "96k", "-ar", "44100", "-ac", "2",
-        "-af", "apad=pad_dur={}".format(TAIL),
+        "-af", "loudnorm=I=-16:TP=-1.5:LRA=11,apad=pad_dur={}".format(TAIL),
         "-t", "{:.3f}".format(duration + TAIL),
         "-movflags", "+faststart", output], check=True)
     # Poster: tüm maddelerin göründüğü, altyazısız kare.

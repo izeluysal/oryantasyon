@@ -158,6 +158,7 @@
   "training.answer.screen_done": "Ekran tamamlandı.",
   "training.answer.wrong": "Tekrar dene. İpucu: yukarıdaki anlatımı ve seslendirmeyi gözden geçir. Sonraki doğru yanıt yarım Ece-Coin kazandırır.",
   "training.audio.aria": "Metroli sesli anlatım",
+  "training.audio.label": "Sesli anlatım (video sesi gelmezse buradan dinleyin)",
   "training.back_to_list": "Ekran listesi",
   "training.badge.ethics": "Akreditasyon ve Etik Lideri",
   "training.badge.isg": "İSG ve Temiz Oda Hijyen Şampiyonu",

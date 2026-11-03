@@ -15,6 +15,9 @@
            aria-label="{{ t('training.video.aria') }}">
       <source src="{{ url_for('static', filename='video/' ~ screen.video_file) }}" type="video/mp4">
     </video>
+    <div class="mb-3"><label class="form-label small fw-semibold" for="narration"><i class="bi bi-headphones me-1" aria-hidden="true"></i>{{ t('training.audio.label') }}</label>
+      <audio id="narration" controls preload="none" class="w-100"
+             src="{{ url_for('static', filename='audio/' ~ screen.video_file[:-4] ~ '.mp3') }}"></audio></div>
     <p class="text-muted small mb-3"><i class="bi bi-volume-up me-1" aria-hidden="true"></i>{{ t('training.video.sound_hint') }}</p>
     <ul class="training-bullets">{% for bullet in screen.bullets %}<li>{{ bullet }}</li>{% endfor %}</ul>
     {% if screen.table_data %}
